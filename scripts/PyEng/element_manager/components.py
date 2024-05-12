@@ -1,4 +1,5 @@
 import pygame
+from ..errors import ComponentDuplicateError
 
 
 class ComponentsManager:
@@ -13,7 +14,7 @@ class ComponentsManager:
         elif isinstance(component, GameComponents):
             self.comp["game"][component.name] = component
         else:
-            print(f"Component: {component} cannot be added")
+            raise ComponentDuplicateError(component)
 
     def update(self):
         for comp_type in self.comp:
@@ -21,10 +22,10 @@ class ComponentsManager:
                 component.update()
 
     def __getitem__(self, item):
-        return self.comp[item]
-
-    def get_item(self, elm_type: str, name: str):
-        return self.comp[elm_type][name]
+        return self.comp["system"][item]
+    
+    def get_game_item(self, name: str):
+        return self.comp["game"][name]
 
 
 class Components:
@@ -57,7 +58,7 @@ class SystemComponents(Components):  # Singleton
         Components.__init__(self, gid, add)
 
     def __repr__(self):
-        return f"{self.__name__}"
+        return f"{self.__class__.__name__}"
 
 
 class GameComponents(Components):
