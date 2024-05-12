@@ -7,7 +7,7 @@ class ComponentsManager:
         self.comp = {"system": {}, "game": {}}
 
     def add_element(self, component: "Components"):
-        # to prevent duplicates of the system elements
+        # prevent duplicates of the system elements
         if isinstance(component, SystemComponents) and component.name not in self.comp["system"]:
             self.comp["system"][component.name] = component
         elif isinstance(component, GameComponents):

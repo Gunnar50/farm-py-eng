@@ -1,4 +1,4 @@
-from GitHub_Projects.GameEngineTesting.scripts import PyEng
+from scripts import PyEng
 
 
 class Game(PyEng.Game):
