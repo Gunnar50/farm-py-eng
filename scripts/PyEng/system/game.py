@@ -3,6 +3,12 @@ from ..element_manager.components import SystemComponents
 
 
 class Game(SystemComponents):
+    """
+    Parent Game class
+    The main Game class should inherit from this
+    class and override its methods
+    """
+    
     def __init__(self):
         SystemComponents.__init__(self)
 
