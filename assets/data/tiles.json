@@ -1,0 +1,30 @@
+{
+  "selection":  {
+    "type": "tile",
+    "layer": 0,
+    "image": "assets/images/tiles/tile_selection.png"
+    },
+  "grass":  {
+    "type": "tile",
+    "layer": 0,
+    "image": "assets/images/tiles/grass_tile.png"
+    },
+  "soil":  {
+    "type": "tile",
+    "layer": 0,
+    "image": "assets/images/tiles/soil_tile.png"
+    },
+  "path":  {
+    "type": "tile",
+    "layer": 0,
+    "image": "assets/images/tiles/path_tile.png"
+    },
+  "stone_path": {
+    "type": "tile",
+    "layer": 0,
+    "image": "assets/images/tiles/stone_path_2.png"
+  }
+
+
+}
+
