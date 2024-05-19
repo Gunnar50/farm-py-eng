@@ -1,9 +1,13 @@
 import pygame
 from ..element_manager.components import SystemComponents
-import typing
+from typing import Literal
+
 
 class Render(SystemComponents):
-    def __init__(self, game_type: typing.Literal["default", "isometric"]):
+    """
+    Render all the elements in the Window
+    """
+    def __init__(self, game_type: Literal["default", "isometric"]):
         SystemComponents.__init__(self)
         self.game_type = game_type
         self.render_group = []

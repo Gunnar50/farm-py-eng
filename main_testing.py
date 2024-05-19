@@ -10,15 +10,23 @@ class Game(PyEng.Game):
             assets_folder="assets/data",
             game_type="isometric",
         )
+        for key, value in self.components_manager.items():
+            setattr(self, key, value)
+            self.__dict__[key] = value
 
-        print(self.components_manager["Assets"].assets)
+        # print(self.components_manager["Assets"].assets)
 
     def game_loop(self):
-        self.components_manager["Window"].clear()
-        dt = self.components_manager["Window"].get_dt()
+        
+        # updates
+        dt = self.window.get_dt()
         self.components_manager.update()
-
+        
+        self.window.clear()
+        # this is where the game should render
         # render.render
+        self.window.swap_buffers()
+
 
 
 
