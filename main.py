@@ -2,6 +2,8 @@ from scripts import PyEng
 
 
 class Game(PyEng.Game):
+    """Main Game Class"""
+
     def load_data(self):
         PyEng.init(
             window_size=(960, 630),
