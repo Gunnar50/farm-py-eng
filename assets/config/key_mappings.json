@@ -1,5 +1,7 @@
 {
-  "key": "command"
+  "mouse_left": "left_click",
+  "mouse_right": "right_click",
+  "mouse_middle": "middle_click"
 }
 
 
