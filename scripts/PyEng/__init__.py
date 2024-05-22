@@ -6,14 +6,20 @@ from .system.input import KeyboardInput
 from .system.input import MouseInput
 from .system.render import Render
 from .system.window import Window
-from typing import Literal
+from .types import Coordinate, ColorValue, StrPath
 
 
-def init(window_size=(640, 480), fullscreen=0, 
-         caption="My Window", fps=60, bg_colour=(0, 0, 0), 
-         assets_folder="data", game_type: Literal["default", "isometric"]="default"):
+def init(*, window_size: Coordinate = (640, 480),
+         fullscreen: int = 0, 
+         caption: str = "My Window",
+         fps: int = 60,
+         bg_colour: ColorValue = (0, 0, 0), 
+         assets_folder: StrPath = "data"):
+    
+    """Initialise all the system components"""
+
     Window(window_size, fullscreen, caption, fps, bg_colour)
-    Render(game_type)
+    Render()
     Assets(assets_folder)
     Camera()
     MouseInput()
