@@ -2,18 +2,22 @@ import pygame
 import sys
 from ..element_manager.components import SystemComponents
 from ..types import StrPath
-import json
+from ..utils.io import read_json
 
-
-class KeyboardInput(SystemComponents):
-    """
-    Keyboard inputs for main keys
-
-    """
+class InputComponent(SystemComponents):
     def __init__(self, key_mappings_path: StrPath):
         SystemComponents.__init__(self)
-        with open(key_mappings_path, "r") as f:
-            self.config = json.load(f)
+        if key_mappings_path:
+            self.config = read_json(key_mappings_path)
+        else:
+            self.config = {}
+
+class KeyboardInput(InputComponent):
+    """
+    Keyboard inputs for main keys
+    """
+    def __init__(self, key_mappings_path: StrPath):
+        InputComponent.__init__(self, key_mappings_path)
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -31,7 +35,7 @@ class KeyboardInput(SystemComponents):
             pass
 
 
-class MouseInput(SystemComponents):
-    def __init__(self):
-        SystemComponents.__init__(self)
+class MouseInput(InputComponent):
+    def __init__(self, key_mappings_path: StrPath):
+        InputComponent.__init__(self, key_mappings_path)
 
