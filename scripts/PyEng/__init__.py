@@ -14,7 +14,9 @@ def init(*, window_size: Coordinate = (640, 480),
          caption: str = "My Window",
          fps: int = 60,
          bg_colour: ColorValue = (0, 0, 0), 
-         assets_folder: StrPath = "data"):
+         assets_folder: StrPath = "data",
+         key_mapping: StrPath = "config"
+         ):
     
     """Initialise all the system components"""
 
@@ -22,6 +24,6 @@ def init(*, window_size: Coordinate = (640, 480),
     Render()
     Assets(assets_folder)
     Camera()
-    MouseInput()
-    KeyboardInput()
+    MouseInput(key_mapping)
+    KeyboardInput(key_mapping)
 

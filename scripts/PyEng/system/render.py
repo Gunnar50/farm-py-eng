@@ -1,7 +1,9 @@
 import pygame
 from ..element_manager.components import SystemComponents
-from typing import Literal
+from typing import Literal, List, TypeAlias, Tuple
 from ..types import Coordinate
+
+render_objects: TypeAlias = Tuple[pygame.Surface, Coordinate, pygame.Surface, int]
 
 class Render(SystemComponents):
     """
@@ -9,7 +11,7 @@ class Render(SystemComponents):
     """
     def __init__(self) -> None:
         SystemComponents.__init__(self)
-        self.render_group = []
+        self.render_group: List[render_objects] = []
 
     def add_to_render_group(self, img: pygame.Surface, pos: Coordinate,
                             dest_surf: pygame.Surface, layer: int) -> None:

@@ -1,6 +1,6 @@
 import os
 import json
-from ..types import StrPath
+from scripts.PyEng.types import StrPath
 
 
 def load_json(file_path: StrPath):

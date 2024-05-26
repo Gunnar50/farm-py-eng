@@ -2,13 +2,13 @@ import pygame
 import sys
 from ..element_manager.components import SystemComponents
 from ..types import StrPath
-from ..utils.io import read_json
+from ..utils.io import load_json
 
 class InputComponent(SystemComponents):
     def __init__(self, key_mappings_path: StrPath):
         SystemComponents.__init__(self)
         if key_mappings_path:
-            self.config = read_json(key_mappings_path)
+            self.config = load_json(key_mappings_path)
         else:
             self.config = {}
 

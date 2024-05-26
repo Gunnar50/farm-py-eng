@@ -1,5 +1,11 @@
 import pygame
 from ..element_manager.components import SystemComponents
+from .assets import Assets
+from .camera import Camera
+from .input import KeyboardInput
+from .input import MouseInput
+from .render import Render
+from .window import Window
 
 
 class Game(SystemComponents):
@@ -11,6 +17,13 @@ class Game(SystemComponents):
     
     def __init__(self):
         SystemComponents.__init__(self)
+        self.window: Window
+        self.render: Render
+        self.assets: Assets
+        self.camera: Camera
+        self.mouseinput: MouseInput
+        self.keyboardinput: KeyboardInput
+        
 
     def load_data(self):
         pass

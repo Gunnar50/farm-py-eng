@@ -3,8 +3,9 @@ from ..element_manager.components import SystemComponents
 import os
 import json
 from typing import TypeAlias
+from scripts.PyEng.types import StrPath
 
-StrPath: TypeAlias = str | os.PathLike[str] 
+
 
 class Assets(SystemComponents):
     """
@@ -13,7 +14,7 @@ class Assets(SystemComponents):
     """
     def __init__(self, assets_folder: StrPath):
         SystemComponents.__init__(self)
-        self.assets = {}
+        self.assets: dict = {}
         self.load_assets(assets_folder)
 
     def load_assets(self, assets_folder: StrPath):
@@ -28,3 +29,5 @@ class Assets(SystemComponents):
                         asset_data["image"] = loaded_img
                         self.assets[asset_name] = asset_data
 
+    def __repr__(self):
+        return f"{self.assets}"
