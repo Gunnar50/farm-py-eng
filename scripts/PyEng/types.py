@@ -7,3 +7,4 @@ Coordinate = Union[Tuple[float, float], Sequence[float], Vector2]
 RGBAOutput = Tuple[int, int, int, int]
 ColorValue = Union[Color, int, str, Tuple[int, int, int], RGBAOutput, Sequence[int]]
 StrPath: TypeAlias = Union[str, os.PathLike[str]]
+
