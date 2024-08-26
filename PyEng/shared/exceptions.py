@@ -7,3 +7,11 @@ class ComponentDuplicateError(Exception):
 
 class ComponentNotFoundError(Exception):
   """Component does not exist or was not found exception"""
+
+
+class InvalidParameters(Exception):
+  """Raise when parameters are invilid"""
+
+
+class FilePathNotFound(Exception):
+  """Raise if a file path is not found"""

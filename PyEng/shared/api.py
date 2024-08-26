@@ -20,3 +20,11 @@ class MouseMapping(enum.Enum):
   MOUSE_LEFT = 'MOUSE_LEFT'
   MOUSE_RIGHT = 'MOUSE_RIGHT'
   MOUSE_MIDDLE = 'MOUSE_MIDDLE'
+
+
+# update this to not be pydantic as it needs to store the surface of the image
+class Tile(pydantic.BaseModel):
+  label: str
+  type_: str
+  layer: int
+  image_path: str
