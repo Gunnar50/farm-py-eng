@@ -1,2 +1,3 @@
 __pycache__
-scripts/PyEng/__pycache__
+PyEng/__pycache__
+.pytype
