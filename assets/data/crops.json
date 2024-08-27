@@ -2,7 +2,7 @@
   "carrot": {
     "type": "entity",
     "layer": 1,
-    "image": [
+    "image_path": [
       "assets/images/crops/carrot/carrot_0.png",
       "assets/images/crops/carrot/carrot_1.png",
       "assets/images/crops/carrot/carrot_2.png",
@@ -15,7 +15,7 @@
   "lettuce": {
     "type": "entity",
     "layer": 1,
-    "image": [
+    "image_path": [
       "assets/images/crops/lettuce/lettuce_0.png",
       "assets/images/crops/lettuce/lettuce_1.png",
       "assets/images/crops/lettuce/lettuce_2.png",

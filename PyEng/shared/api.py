@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import enum
 
 import pydantic
@@ -22,9 +23,13 @@ class MouseMapping(enum.Enum):
   MOUSE_MIDDLE = 'MOUSE_MIDDLE'
 
 
-# update this to not be pydantic as it needs to store the surface of the image
-class Tile(pydantic.BaseModel):
+@dataclass
+class BaseModel:
+  pass
+
+
+class Tile(BaseModel):
   label: str
   type_: str
   layer: int
-  image_path: str
+  image_path: list[pygame.Surface]

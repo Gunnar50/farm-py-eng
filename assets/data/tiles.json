@@ -3,30 +3,30 @@
     "label": "selection",
     "type_": "tile",
     "layer": 0,
-    "image_path": "assets/images/tiles/tile_selection.png"
+    "image_path": ["assets/images/tiles/tile_selection.png"]
   },
   {
     "label": "grass",
     "type_": "tile",
     "layer": 0,
-    "image_path": "assets/images/tiles/grass_tile.png"
+    "image_path": ["assets/images/tiles/grass_tile.png"]
   },
   {
     "label": "soil",
     "type_": "tile",
     "layer": 0,
-    "image_path": "assets/images/tiles/soil_tile.png"
+    "image_path": ["assets/images/tiles/soil_tile.png"]
   },
   {
     "label": "path",
     "type_": "tile",
     "layer": 0,
-    "image_path": "assets/images/tiles/path_tile.png"
+    "image_path": ["assets/images/tiles/path_tile.png"]
   },
   {
     "label": "stone_path",
     "type_": "tile",
     "layer": 0,
-    "image_path": "assets/images/tiles/stone_path_2.png"
+    "image_path": ["assets/images/tiles/stone_path_2.png"]
   }
 ]
