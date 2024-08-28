@@ -1,3 +1,4 @@
+import abc
 from dataclasses import dataclass
 import enum
 
@@ -24,11 +25,7 @@ class MouseMapping(enum.Enum):
 
 
 @dataclass
-class BaseModel:
-  pass
-
-
-class Tile(BaseModel):
+class BaseModel(abc.ABC):
   label: str
   type_: str
   layer: int
