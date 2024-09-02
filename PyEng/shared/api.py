@@ -26,7 +26,7 @@ class MouseMapping(enum.Enum):
 @dataclass
 class BaseModel:
   label: str
-  type_: str
+  type: str
   layer: int
   image_path: list[pygame.Surface]
 
