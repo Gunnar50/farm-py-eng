@@ -1,4 +1,3 @@
-import abc
 from dataclasses import dataclass
 import enum
 
@@ -25,8 +24,21 @@ class MouseMapping(enum.Enum):
 
 
 @dataclass
-class BaseModel(abc.ABC):
+class BaseModel:
   label: str
   type_: str
   layer: int
   image_path: list[pygame.Surface]
+
+
+class Tile(BaseModel):
+  pass
+
+
+class Entity(BaseModel):
+  pass
+
+
+class Crops(Entity):
+  grow_time: list[int]
+  amount: int
