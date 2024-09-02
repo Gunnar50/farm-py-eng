@@ -1,9 +1,9 @@
-from dataclasses import dataclass
 import enum
 
 import pydantic
 import pygame
 
+from PyEng.element_manager import components
 from PyEng.shared.types import Coordinate
 
 
@@ -21,24 +21,3 @@ class MouseMapping(enum.Enum):
   MOUSE_LEFT = 'MOUSE_LEFT'
   MOUSE_RIGHT = 'MOUSE_RIGHT'
   MOUSE_MIDDLE = 'MOUSE_MIDDLE'
-
-
-@dataclass
-class BaseModel:
-  label: str
-  type: str
-  layer: int
-  image_path: list[pygame.Surface]
-
-
-class Tile(BaseModel):
-  pass
-
-
-class Entity(BaseModel):
-  pass
-
-
-class Crops(Entity):
-  grow_time: list[int]
-  amount: int

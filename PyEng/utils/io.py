@@ -25,7 +25,7 @@ def get_class_name(text: str):
   return text[0].upper() + text[1:].lower()
 
 
-def load_files(file_path: StrPath) -> Generator[Any, Any, None]:
+def load_json_data(file_path: StrPath) -> Generator[Any, Any, None]:
   if os.path.exists(file_path):
     with open(file_path, 'r') as f:
       remaining_data = json.load(f)

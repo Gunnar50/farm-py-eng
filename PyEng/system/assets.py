@@ -21,7 +21,7 @@ class Assets(SystemComponent):
     for file_name in os.listdir(assets_folder):
       if file_name.endswith(".json"):
         file_path = os.path.join(assets_folder, file_name)
-        for instance in io.load_files(file_path):
+        for instance in io.load_json_data(file_path):
           self.assets[instance.label] = instance
 
   def get_assets(self):

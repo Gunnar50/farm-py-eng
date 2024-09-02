@@ -1,7 +1,7 @@
 [
   {
-    "label": "carrot",
     "type": "entity",
+    "label": "carrot",
     "layer": 1,
     "image_path": [
       "assets/images/crops/carrot/carrot_0.png",
@@ -16,8 +16,8 @@
     "amount": 1
   },
   {
-    "label": "lettuce",
     "type": "entity",
+    "label": "lettuce",
     "layer": 1,
     "image_path": [
       "assets/images/crops/lettuce/lettuce_0.png",
