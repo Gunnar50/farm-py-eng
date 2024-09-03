@@ -3,7 +3,6 @@ import enum
 import pydantic
 import pygame
 
-from PyEng.element_manager import components
 from PyEng.shared.types import Coordinate
 
 

@@ -16,7 +16,7 @@ class Game(PyEng.Game):
       setattr(self, component.name, component)
       self.__dict__[component.name] = component
 
-    self.assets.print_assets()
+    # self.assets.print_assets()
 
   def game_loop(self):
 
