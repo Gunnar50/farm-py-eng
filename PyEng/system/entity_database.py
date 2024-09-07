@@ -1,10 +1,8 @@
-import json
 import os
 from typing import Optional
 
 from PyEng.shared import db_models
 from PyEng.shared.debug import LOGGER
-from PyEng.shared.types import StrPath
 from PyEng.utils import io
 
 from PyEng.element_manager.components import SystemComponent
@@ -13,12 +11,12 @@ from PyEng.element_manager.components import SystemComponent
 class Database(SystemComponent):
   """Load all the game assests locate in the specified directory."""
 
-  def __init__(self, path: StrPath):
+  def __init__(self, path: str):
     SystemComponent.__init__(self)
     self._database: dict[str, db_models.BaseModel] = {}
     self.load(path)
 
-  def load(self, path: StrPath):
+  def load(self, path: str):
     for file_name in os.listdir(path):
       if file_name.endswith(".json"):
         file_path = os.path.join(path, file_name)

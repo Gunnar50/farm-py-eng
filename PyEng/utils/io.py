@@ -1,23 +1,24 @@
 import json
+from logging import exception
 import os
-from typing import Any, Generator, TypeVar
+from typing import Any, Generator, Iterable, Optional, TypeVar, Union
 import pygame
-import pydantic
-from PyEng.shared import exceptions
+from PyEng.shared import api, db_models, exceptions
 
-from PyEng.shared.types import StrPath
+from PyEng.shared.debug import LOGGER
 from PyEng.game_components import game_components
 
 DataclassModelType = TypeVar('DataclassModelType',
                              bound=game_components.BaseModel)
 
 
-def load_json(file_path: StrPath):
+def load_json(file_path: str):
   if os.path.exists(file_path):
     with open(file_path, 'r') as f:
       return json.load(f)
   else:
-    return {}
+    LOGGER.error(f'File path {file_path} not found. Exiting...')
+    raise exceptions.FilePathNotFound
 
 
 def get_class_name(text: str):
@@ -26,52 +27,39 @@ def get_class_name(text: str):
   return text[0].upper() + text[1:].lower()
 
 
-def load_json_data(file_path: StrPath) -> Generator[Any, Any, None]:
+def load_json_data(file_path: str) -> Generator[db_models.BaseModel, Any, None]:
   if os.path.exists(file_path):
     with open(file_path, 'r') as f:
-      remaining_data = json.load(f)
+      remaining_data: Iterable[dict[str, Any]] = json.load(f)
   else:
-    raise exceptions.FilePathNotFound
+    LOGGER.warning(f'File path not found: {file_path}')
+    return
 
-  data: dict[str, Any]
   for data in remaining_data:
-    if 'type' not in data:
-      print(f'Warning: "type" not found in data: {data}')
+    group = data.get('group', None)
+    if group is None:
+      LOGGER.warning('"group" key does not exist in config. Skipping...')
       continue
 
-    # Get the class name from the group attribute
-    class_name = data.pop('type').capitalize()
-
-    # Get the correct class from game_components
-    model = getattr(game_components, class_name, None)
+    model = getattr(db_models, group.capitalize(), None)
     if model is None:
-      print(f'Warning: model {class_name} not found in game_components.')
+      LOGGER.warning(f'model {group} not found in game_components. Skipping...')
       continue
 
-    # Unpack the attributes into the model class
-    values: dict[str, Any] = {}
-    print(model.__dataclass_fields__.keys())
-    for attr in model.__dataclass_fields__.keys():
-      if attr in data:
-        value = data.pop(attr)
-        values[attr] = value
+    image_path = data.pop('image_path', None)
+    if image_path is None:
+      LOGGER.warning('"image_path" key not found in config. Skipping...')
+      continue
 
-    # Create the images
+    # Fix image path
+    data['image_path'] = [f'assets/images/{path}' for path in image_path]
 
-    # assets/images/tiles/grass_tile.png
-    directory, image_data = load_images(values['group'], values['label'])
-    values['image_path'] = directory
-    values['image_surface'] = image_data
-
-    if data:
-      print(f'Warning: Extra data found in config file: {data}')
-
-    yield model(**values)
+    yield model(**data)
 
 
 def load_images(group: str, label: str, file_type: str = 'png'):
   path = f'assets/images/{group}'
-  image_data: list[pygame.Surface] = []
+  image_data: Iterable[pygame.Surface] = []
   for directory, _, file_path in os.walk(path):
     for asset in file_path:
       asset_type = asset.split('.')[-1]
@@ -80,12 +68,3 @@ def load_images(group: str, label: str, file_type: str = 'png'):
         img = pygame.image.load(asset_path).convert_alpha()
         image_data.append(img)
   return directory, image_data
-
-
-# def repr_method(self):
-#   return f"{class_name}({', '.join(f'{k}={v!r}' for k, v in self.__dict__.items())})"
-
-# r = load_files('assets/data/crops.json')
-# print(r)
-# for a in r:
-#   print(a.grow_time)
