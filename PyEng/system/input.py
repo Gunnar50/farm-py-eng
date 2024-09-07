@@ -1,45 +1,73 @@
 import sys
+import time
 
 import pygame
 
 from PyEng.element_manager.components import SystemComponent
+from PyEng.shared import api
 from PyEng.utils.io import load_json
 
 
-class InputComponent(SystemComponent):
+class InputState:
+
+  def __init__(self, mapping: api.KeyMappingModel):
+    self.label = mapping.label
+    self.type = mapping.type
+    self.input = mapping.input_id
+
+    self.pressed = False
+    self.just_pressed = False
+    self.just_released = False
+    self.held_since = 0.0
+
+  def update(self):
+    self.just_pressed = False
+    self.just_released = False
+
+  def press(self):
+    self.pressed = True
+    self.just_pressed = True
+    self.held_since = time.time()
+
+  def unpress(self):
+    self.pressed = False
+    self.just_released = True
+
+
+class Input(SystemComponent):
 
   def __init__(self, key_mappings_path: str):
     SystemComponent.__init__(self)
-    if key_mappings_path:
-      self.config = load_json(key_mappings_path)
-    else:
-      self.config = {}
+    self.config: list[api.KeyMappingModel] = load_json(key_mappings_path)
+    self.input = {mapping.label: InputState(mapping) for mapping in self.config}
 
+    self.keyboard = Keyboard()
+    self.mouse = Mouse()
 
-class KeyboardInput(InputComponent):
-  """Keyboard inputs for main keys"""
+  def pressed(self, key: api.KeyMapping):
+    return self.input[key.value].just_pressed if key in self.input else False
 
-  def __init__(self, key_mappings_path: str):
-    InputComponent.__init__(self, key_mappings_path)
+  def holding(self, key):
+    return self.input[key].pressed if key in self.input else False
+
+  def released(self, key):
+    return self.input[key].just_released if key in self.input else False
 
   def update(self):
-    keys = pygame.key.get_pressed()
-
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
         sys.exit()
 
-    if keys[pygame.K_ESCAPE]:
-      pygame.quit()
-      sys.exit()
-
-    if keys[pygame.K_LEFT]:
-      pass
+      if event.type == pygame.KEYDOWN:
+        if event.button == pygame.K_ESCAPE:
+          pygame.quit()
+          sys.exit()
 
 
-class MouseInput(InputComponent):
+class Keyboard:
+  """Keyboard inputs for main keys"""
+
+
+class Mouse:
   """Mouse inputs for main keys"""
-
-  def __init__(self, key_mappings_path: str):
-    InputComponent.__init__(self, key_mappings_path)

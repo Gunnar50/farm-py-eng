@@ -3,7 +3,7 @@ from PyEng.shared.types import ColorValue, Coordinate
 from PyEng.system.assets import Assets
 from PyEng.system.camera import Camera
 from PyEng.system.game import Game
-from PyEng.system.input import KeyboardInput, MouseInput
+from PyEng.system.input import Input
 from PyEng.system.render import Render
 from PyEng.system.window import Window
 
@@ -24,5 +24,4 @@ def init(
   Render()
   Assets(assets_folder)
   Camera()
-  MouseInput(key_mapping)
-  KeyboardInput(key_mapping)
+  Input(key_mapping)

@@ -4,19 +4,16 @@ import PyEng
 class Game(PyEng.Game):
   """Main Game Class"""
 
-  def load_data(self):
-    PyEng.init(
+  def __init__(self):
+    PyEng.Game.__init__(
+        self,
         window_size=(960, 630),
-        caption="My Specific Game",
-        bg_colour=(100, 0, 0),
-        assets_folder="assets/data",
+        caption="Farm Game",
+        bg_colour=(100, 100, 100),
     )
-    # print(f'{self.components_manager.components()=}')
-    for component in self.components_manager.components():
-      setattr(self, component.name, component)
-      self.__dict__[component.name] = component
 
-    # self.assets.print_assets()
+  def load_data(self):
+    pass
 
   def game_loop(self):
 
