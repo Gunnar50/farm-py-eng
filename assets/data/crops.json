@@ -1,7 +1,6 @@
 [
   {
-    "type": "crops",
-    "group": "crops",
+    "group": "crop",
     "label": "carrot",
     "layer": 1,
     "image_path": [
@@ -17,8 +16,7 @@
     "amount": 1
   },
   {
-    "type": "crops",
-    "group": "crops",
+    "group": "crop",
     "label": "lettuce",
     "layer": 1,
     "image_path": [

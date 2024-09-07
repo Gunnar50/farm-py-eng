@@ -1,8 +1,42 @@
-{
-  "mouse_left": "left_click",
-  "mouse_right": "right_click",
-  "mouse_middle": "middle_click"
-}
-
-
-
+[
+  {
+    "label": "quit",
+    "type": "button",
+    "input_id": 27
+  },
+  {
+    "label": "right",
+    "type": "button",
+    "input_id": 1073741903
+  },
+  {
+    "label": "left",
+    "type": "button",
+    "input_id": 1073741904
+  },
+  {
+    "label": "up",
+    "type": "button",
+    "input_id": 1073741906
+  },
+  {
+    "label": "down",
+    "type": "button",
+    "input_id": 1073741905
+  },
+  {
+    "label": "left_click",
+    "type": "mouse",
+    "input_id": 1
+  },
+  {
+    "label": "middle_click",
+    "type": "mouse",
+    "input_id": 2
+  },
+  {
+    "label": "right_click",
+    "type": "mouse",
+    "input_id": 3
+  }
+]
