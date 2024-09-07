@@ -19,3 +19,6 @@ clean:
 
 run:
 	python main.py
+
+enum:
+	python ./scripts/generate_mappings.py
