@@ -62,7 +62,7 @@ class Component:
 
     # print(f"Setting up: {self.name}")
 
-  def update(self, dt: Optional[float] = None):
+  def update(self):
     pass
 
 

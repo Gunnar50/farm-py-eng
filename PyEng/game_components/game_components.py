@@ -52,7 +52,10 @@ class Crop(Entity):
   def is_fully_grown(self):
     return self.current_stage == self.ready_stage
 
-  def update(self, dt: Optional[float] = None):
+  def update(self):
+    # TODO - get DT from window
+    dt = 1.0
+
     # Check if is fully grown
     if self.is_fully_grown():
       return
