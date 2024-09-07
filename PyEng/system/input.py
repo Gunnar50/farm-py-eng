@@ -3,13 +3,12 @@ import sys
 import pygame
 
 from PyEng.element_manager.components import SystemComponent
-from PyEng.shared.types import StrPath
 from PyEng.utils.io import load_json
 
 
 class InputComponent(SystemComponent):
 
-  def __init__(self, key_mappings_path: StrPath):
+  def __init__(self, key_mappings_path: str):
     SystemComponent.__init__(self)
     if key_mappings_path:
       self.config = load_json(key_mappings_path)
@@ -20,7 +19,7 @@ class InputComponent(SystemComponent):
 class KeyboardInput(InputComponent):
   """Keyboard inputs for main keys"""
 
-  def __init__(self, key_mappings_path: StrPath):
+  def __init__(self, key_mappings_path: str):
     InputComponent.__init__(self, key_mappings_path)
 
   def update(self):
@@ -42,5 +41,5 @@ class KeyboardInput(InputComponent):
 class MouseInput(InputComponent):
   """Mouse inputs for main keys"""
 
-  def __init__(self, key_mappings_path: StrPath):
+  def __init__(self, key_mappings_path: str):
     InputComponent.__init__(self, key_mappings_path)
