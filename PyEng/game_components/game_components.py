@@ -1,10 +1,10 @@
-from dataclasses import dataclass
-from typing import Optional
+import dataclasses
+from typing import Iterable, Optional, Union
 import pygame
 from PyEng.element_manager import components
 
 
-@dataclass
+@dataclasses.dataclass
 class BaseModel(components.GameComponent):
   '''
   Type: class that belongs to
@@ -15,31 +15,23 @@ class BaseModel(components.GameComponent):
   label: str
   group: str
   layer: int
-  image_path: list[str]
-  image: Optional[list[pygame.Surface]] = None
-
-  # Executes right after the __init__ method
-  def __post_init__(self):
-    # Generate image
-    if self.image is None:
-      # TODO - update tile size
-      self.image = [
-          pygame.transform.scale(pygame.image.load(image), (100, 100))
-          for image in self.image_path
-      ]
+  images: tuple[pygame.Surface]
 
 
-@dataclass
+@dataclasses.dataclass
 class Tile(BaseModel):
   pass
 
 
-@dataclass
+@dataclasses.dataclass
 class Entity(BaseModel):
   pass
 
 
-@dataclass
-class Crops(Entity):
-  grow_time: list[int]
-  amount: int
+@dataclasses.dataclass
+class Crop(Entity):
+  # Grow time is amount in seconds
+  grow_time: Iterable[int]
+  amount: Union[int, Iterable[int]]
+  next_growth_time: float = 0.0
+
