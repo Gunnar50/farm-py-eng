@@ -16,7 +16,23 @@ class RenderObjects(pydantic.BaseModel):
   model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
 
 
-class MouseMapping(enum.Enum):
-  MOUSE_LEFT = 'MOUSE_LEFT'
-  MOUSE_RIGHT = 'MOUSE_RIGHT'
-  MOUSE_MIDDLE = 'MOUSE_MIDDLE'
+class KeyMapping(enum.Enum):
+  QUIT = 'quit'
+  RIGHT = 'right'
+  LEFT = 'left'
+  UP = 'up'
+  DOWN = 'down'
+  LEFT_CLICK = 'left_click'
+  MIDDLE_CLICK = 'middle_click'
+  RIGHT_CLICK = 'right_click'
+
+
+class KeyMappingModel(pydantic.BaseModel):
+  label: KeyMapping
+  type: str
+  input_id: str
+
+
+class GroupType(enum.Enum):
+  TILES = 'tiles'
+  CROPS = 'crops'
