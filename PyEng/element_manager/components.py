@@ -1,5 +1,5 @@
 from PyEng.shared import exceptions
-
+from PyEng.shared.debug import LOGGER
 """
 ID ranges
 System components: 1000 - 1999
@@ -25,13 +25,12 @@ class ComponentManager:  # Singleton
     self.game_components_by_id: dict[int, GameComponent] = {}
 
   def add_element(self, component: 'Component'):
-    # prevent duplicates of the system elements
+    # Prevent duplicates of the system elements
     if isinstance(component, SystemComponent):
       if component.id not in self.system_components_by_id.keys():
         self.system_components_by_id[component.id] = component
       else:
-        print(f'{self.system_components_by_id=}')
-        print(f'{component=}')
+        LOGGER.error('Duplicate system component. Exiting...')
         raise exceptions.ComponentDuplicateError
     elif isinstance(component, GameComponent):
       self.game_components_by_id[component.id] = component

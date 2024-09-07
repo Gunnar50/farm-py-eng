@@ -29,4 +29,4 @@ class Assets(SystemComponent):
 
   def print_assets(self):
     for label, asset in self.assets.items():
-      print(f'{label}: {asset}')
+      LOGGER.info(f'{label}: {asset}')
