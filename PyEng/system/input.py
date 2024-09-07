@@ -1,19 +1,20 @@
 import sys
 import time
+from typing import Any
 
 import pygame
 
 from PyEng.element_manager.components import SystemComponent
 from PyEng.shared import api
-from PyEng.utils.io import load_json
+from PyEng.utils import io
 
 
 class InputState:
 
-  def __init__(self, mapping: api.KeyMappingModel):
-    self.label = mapping.label
-    self.type = mapping.type
-    self.input = mapping.input_id
+  def __init__(self, label: str, type: str, input_id: int):
+    self.label = label
+    self.type = type
+    self.input = input_id
 
     self.pressed = False
     self.just_pressed = False
@@ -38,14 +39,17 @@ class Input(SystemComponent):
 
   def __init__(self, key_mappings_path: str):
     SystemComponent.__init__(self)
-    self.config: list[api.KeyMappingModel] = load_json(key_mappings_path)
-    self.input = {mapping.label: InputState(mapping) for mapping in self.config}
+    self.config: list[dict[str, Any]] = io.load_json(key_mappings_path)
+    self.input = {
+        api.KeyMapping(mapping['label']): InputState(**mapping)
+        for mapping in self.config
+    }
 
     self.keyboard = Keyboard()
     self.mouse = Mouse()
 
   def pressed(self, key: api.KeyMapping):
-    return self.input[key.value].just_pressed if key in self.input else False
+    return self.input[key].just_pressed if key in self.input else False
 
   def holding(self, key):
     return self.input[key].pressed if key in self.input else False
@@ -53,7 +57,7 @@ class Input(SystemComponent):
   def released(self, key):
     return self.input[key].just_released if key in self.input else False
 
-  def update(self):
+  def update(self, dt: float | None = None):
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
