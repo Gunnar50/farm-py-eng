@@ -1,4 +1,5 @@
 from typing import Iterable, Optional
+
 import pydantic
 import pygame
 

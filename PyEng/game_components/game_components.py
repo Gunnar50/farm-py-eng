@@ -1,7 +1,9 @@
 import dataclasses
 import random
-from typing import Iterable, Union
+from typing import Iterable, Optional, Union
+
 import pygame
+
 from PyEng.element_manager import components
 
 
@@ -50,7 +52,7 @@ class Crop(Entity):
   def is_fully_grown(self):
     return self.current_stage == self.ready_stage
 
-  def update(self, dt):
+  def update(self, dt: Optional[float] = None):
     # Check if is fully grown
     if self.is_fully_grown():
       return

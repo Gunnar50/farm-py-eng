@@ -1,3 +1,4 @@
+from typing import Optional
 from PyEng.shared import exceptions
 from PyEng.shared.debug import LOGGER
 """
@@ -61,7 +62,7 @@ class Component:
 
     # print(f"Setting up: {self.name}")
 
-  def update(self):
+  def update(self, dt: Optional[float] = None):
     pass
 
 

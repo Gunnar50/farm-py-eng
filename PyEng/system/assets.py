@@ -3,10 +3,9 @@ import os
 
 import pygame
 
+from PyEng.element_manager.components import SystemComponent
 from PyEng.shared.debug import LOGGER
 from PyEng.utils import io
-
-from PyEng.element_manager.components import SystemComponent
 
 
 class Assets(SystemComponent):

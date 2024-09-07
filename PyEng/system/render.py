@@ -1,4 +1,5 @@
 from typing import Iterable
+
 import pygame
 
 from PyEng.element_manager.components import SystemComponent

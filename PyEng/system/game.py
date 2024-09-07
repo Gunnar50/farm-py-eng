@@ -1,13 +1,13 @@
 import pygame
 
+import PyEng
 from PyEng.element_manager.components import SystemComponent
+from PyEng.shared.types import ColorValue, Coordinate
 from PyEng.system.assets import Assets
 from PyEng.system.camera import Camera
 from PyEng.system.input import Input
 from PyEng.system.render import Render
 from PyEng.system.window import Window
-import PyEng
-from PyEng.shared.types import ColorValue, Coordinate
 
 
 class Game(SystemComponent):
@@ -26,7 +26,7 @@ class Game(SystemComponent):
       fps: int = 60,
       bg_colour: ColorValue = (0, 0, 0),
       assets_folder: str = "assets/data",
-      key_mapping: str = "config",
+      key_mapping: str = "assets/config/key_mappings.json",
   ):
     SystemComponent.__init__(self)
     PyEng.init(
