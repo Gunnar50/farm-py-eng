@@ -12,7 +12,7 @@ class Render(SystemComponent):
 
   def __init__(self) -> None:
     SystemComponent.__init__(self)
-    self.render_group: Iterable[api.RenderObjects] = []
+    self.render_group: list[api.RenderObjects] = []
 
   def add_to_render_group(
       self,

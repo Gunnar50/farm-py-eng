@@ -57,7 +57,7 @@ class Input(SystemComponent):
   def released(self, key):
     return self.input[key].just_released if key in self.input else False
 
-  def update(self, dt: float | None = None):
+  def update(self):
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
