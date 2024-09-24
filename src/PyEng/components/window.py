@@ -2,11 +2,8 @@ import time
 
 import pygame
 
-from PyEng.element_manager.components import SystemComponent
-from PyEng.shared.types import ColorValue, Coordinate
 
-
-class Window(SystemComponent):
+class Window:
   """
   Window class
 
@@ -16,24 +13,34 @@ class Window(SystemComponent):
 
   def __init__(
       self,
-      window_size: Coordinate,
+      window_width: int,
+      window_height: int,
       fullscreen: int,
       caption: str,
       fps: int,
-      bg_colour: ColorValue,
+      vsync: bool,
+      background_colour: tuple[int, int, int],
   ):
-    SystemComponent.__init__(self)
     pygame.init()
     self.fps = fps
-    self.background_colour = bg_colour
-    self.window_size = window_size
+    self.background_colour = background_colour
+    self.window_width = window_width
+    self.window_height = window_height
     self.start_time = time.time()
 
-    self.screen = pygame.display.set_mode(window_size, fullscreen)
+    self.screen = pygame.display.set_mode(size=(window_width, window_height),
+                                          flags=fullscreen,
+                                          vsync=vsync)
     pygame.display.set_caption(caption)
     self.clock = pygame.time.Clock()
 
     self.previous_frame = time.time()
+
+  def get_width(self) -> int:
+    return self.window_width
+
+  def get_height(self) -> int:
+    return self.window_height
 
   def get_dt(self):
     dt = time.time() - self.previous_frame
