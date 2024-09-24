@@ -4,9 +4,9 @@ from typing import Any
 
 import pygame
 
-from PyEng.element_manager.components import SystemComponent
-from PyEng.shared import api
-from PyEng.utils import io
+from src.PyEng.components.components import SystemComponent
+from src.PyEng.utils import io
+from src.shared import api
 
 
 class InputState:

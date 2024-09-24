@@ -1,6 +1,6 @@
 import pygame
 
-from PyEng.element_manager.components import SystemComponent
+from src.PyEng.components.components import SystemComponent
 
 
 class Camera(SystemComponent):

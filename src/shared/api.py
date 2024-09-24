@@ -3,7 +3,7 @@ import enum
 import pydantic
 import pygame
 
-from PyEng.shared.types import Coordinate
+from src.shared.types import Coordinate
 
 
 class RenderObjects(pydantic.BaseModel):

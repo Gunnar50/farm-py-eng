@@ -1,10 +1,8 @@
-from typing import Optional
-from PyEng.shared import exceptions
-from PyEng.shared.debug import LOGGER
+from src.shared import exceptions
+from src.shared.debug import LOGGER
 """
 ID ranges
 System components: 1000 - 1999
-Game components: 2000 - 2999
 """
 
 
@@ -21,9 +19,7 @@ class ComponentManager:  # Singleton
     return cls.__instance
 
   def __init__(self):
-    # {singletons, duplicates}
     self.system_components_by_id: dict[int, SystemComponent] = {}
-    self.game_components_by_id: dict[int, GameComponent] = {}
 
   def add_element(self, component: 'Component'):
     # Prevent duplicates of the system elements
@@ -33,16 +29,12 @@ class ComponentManager:  # Singleton
       else:
         LOGGER.error('Duplicate system component. Exiting...')
         raise exceptions.ComponentDuplicateError
-    elif isinstance(component, GameComponent):
-      self.game_components_by_id[component.id] = component
     else:
       raise exceptions.ComponentNotFoundError
 
   def update(self):
-    for sys_comp in self.system_components_by_id.values():
-      sys_comp.update()
-    for game_comp in self.game_components_by_id.values():
-      game_comp.update()
+    for component in self.system_components_by_id.values():
+      component.update()
 
   def components(self):
     return self.system_components_by_id.values()
@@ -60,7 +52,7 @@ class Component:
     if add:
       self.components_manager.add_element(self)
 
-    # print(f"Setting up: {self.name}")
+    LOGGER.info(f"Setting up: {self.name}")
 
   def update(self):
     pass
@@ -85,18 +77,3 @@ class SystemComponent(Component):  # Singleton
 
   def __repr__(self):
     return f"System Component: '{self.__class__.__name__}()'"
-
-
-class GameComponent(Component):
-  """Game components that can be duplicates"""
-  _id = 2000
-
-  def __new__(cls, *args, **kwargs):
-    GameComponent._id += 1
-    return super().__new__(cls)
-
-  def __init__(self, add=True):
-    Component.__init__(self, self.__class__._id, add)
-
-  def __repr__(self):
-    return f"Game Component: '{self.__class__.__name__}()'"

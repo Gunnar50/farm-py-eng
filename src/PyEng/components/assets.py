@@ -1,11 +1,8 @@
-import json
 import os
 
-import pygame
-
-from PyEng.element_manager.components import SystemComponent
-from PyEng.shared.debug import LOGGER
-from PyEng.utils import io
+from src.PyEng.components.components import SystemComponent
+from src.shared.debug import LOGGER
+from src.PyEng.utils import io
 
 
 class Assets(SystemComponent):

@@ -1,10 +1,8 @@
-from typing import Iterable
-
 import pygame
 
-from PyEng.element_manager.components import SystemComponent
-from PyEng.shared import api
-from PyEng.shared.types import Coordinate
+from src.PyEng.components.components import SystemComponent
+from src.shared import api
+from src.shared.types import Coordinate
 
 
 class Render(SystemComponent):

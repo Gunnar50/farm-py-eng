@@ -1,15 +1,14 @@
 import os
-from PyEng.components.frame_timer import FrameTimer
-from PyEng.components.keyboard import Keyboard
-from PyEng.components.mouse import Mouse
-from PyEng.components.state_manager import StateManager
-from PyEng.components.window import Window
-from PyEng.main.engine_config import EngineConfigs
-from PyEng.gui.ui_components.user_interface import UserInterface
-from PyEng.main.engine_files import EngineFiles
-from PyEng.utils.debugger import Debugger
-from PyEng.utils.error_manager import ErrorManager
-from PyEng.utils.exceptions import IllegalStateException
+from src.shared.debug import LOGGER
+from src.PyEng.components.components import ComponentManager
+from src.PyEng.components.input import Keyboard
+from src.PyEng.components.input import Mouse
+from src.PyEng.components.window import Window
+from src.PyEng.main.engine_config import EngineConfigs
+from src.PyEng.main.engine_files import EngineFiles
+from src.PyEng.utils.debugger import Debugger
+from src.PyEng.utils.error_manager import ErrorManager
+from src.shared import exceptions
 
 
 class Engine:
@@ -21,24 +20,15 @@ class Engine:
       window: Window,
       mouse: Mouse,
       keyboard: Keyboard,
-      timer: FrameTimer,
-      state_manager: StateManager,
   ):
+    self.components_manager = ComponentManager()
     self.window = window
     self.mouse = mouse
     self.keyboard = keyboard
-    self.timer = timer
-    self.state_manager = state_manager
     self.close_flag = False
 
   def update(self) -> None:
-    # BackgroundLoader.do_top_gl_requests()
-    # UserInterface.update(self.get_delta())
-    self.keyboard.update()
-    self.mouse.update()
-    self.window.update()
-    self.timer.update()
-    self.state_manager.update()
+    self.components_manager.update()
 
   def get_delta(self) -> float:
     return self.timer.get_delta()
@@ -57,7 +47,8 @@ class Engine:
       configs: EngineConfigs = EngineConfigs.get_default_configs(),
   ) -> 'Engine':
     if cls.__instance is not None:
-      raise IllegalStateException("Engine has already been initialised!")
+      raise exceptions.IllegalStateException(
+          'Engine has already been initialised!')
 
     return EngineCreator(configs).get_instance()
 
@@ -65,8 +56,10 @@ class Engine:
 class EngineCreator:
 
   def __init__(self, configs: EngineConfigs):
-    # TODO add res folder
-    self.check_assets_folder_exists()
+    if not os.path.exists(EngineFiles.ASSETS_FOLDER):
+      raise exceptions.IllegalStateException(
+          f"Can't init engine - assets folder not found in root directory {EngineFiles.ROOT_FOLDER}."
+      )
 
     # Create gloabal systems
     ErrorManager(EngineFiles.ERROR_FOLDER)
@@ -79,11 +72,6 @@ class EngineCreator:
   def get_instance(self) -> 'Engine':
     return self.engine
 
-  def check_assets_folder_exists(self):
-    if os.path.exists(EngineFiles.ASSETS_FOLDER):
-      return
-    raise IllegalStateException("Can't init engine - assets folder not found.")
-
   def create_engine_instance(self, configs: EngineConfigs):
     window = Window(
         window_width=configs.window_width,
@@ -95,20 +83,18 @@ class EngineCreator:
         background_colour=configs.background_colour,
     )
     keyboard = Keyboard()
-    mouse = Mouse(window)
-    timer = FrameTimer(configs.fps)
-    state_manager = StateManager()
+    mouse = Mouse()
+    # timer = FrameTimer(configs.fps)
+    # state_manager = StateManager()
     # Create UI
-    UserInterface(
-        window,
-        mouse,
-        keyboard,
-        configs.ui_configs,
-    )
+    # UserInterface(
+    #     window,
+    #     mouse,
+    #     keyboard,
+    #     configs.ui_configs,
+    # )
     return Engine(
         window,
         mouse,
         keyboard,
-        timer,
-        state_manager,
     )

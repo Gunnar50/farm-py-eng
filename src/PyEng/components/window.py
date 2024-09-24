@@ -2,8 +2,10 @@ import time
 
 import pygame
 
+from src.PyEng.components.components import SystemComponent
 
-class Window:
+
+class Window(SystemComponent):
   """
   Window class
 
@@ -21,6 +23,7 @@ class Window:
       vsync: bool,
       background_colour: tuple[int, int, int],
   ):
+    SystemComponent.__init__(self)
     pygame.init()
     self.fps = fps
     self.background_colour = background_colour
