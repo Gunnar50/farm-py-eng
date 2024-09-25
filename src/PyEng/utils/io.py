@@ -58,7 +58,7 @@ def load_json_data(file_path: str) -> Generator[db_models.BaseModel, Any, None]:
 
 def load_images(group: str, label: str, file_type: str = 'png'):
   path = f'assets/images/{group}'
-  image_data: Iterable[pygame.Surface] = []
+  image_data: list[pygame.Surface] = []
   for directory, _, file_path in os.walk(path):
     for asset in file_path:
       asset_type = asset.split('.')[-1]

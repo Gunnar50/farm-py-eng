@@ -1,8 +1,8 @@
 import os
 
 from src.PyEng.components.components import SystemComponent
-from src.shared.debug import LOGGER
 from src.PyEng.utils import io
+from src.shared.debug import LOGGER
 
 
 class Assets(SystemComponent):

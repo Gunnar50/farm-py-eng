@@ -1,14 +1,14 @@
 import os
-from src.shared.debug import LOGGER
+
 from src.PyEng.components.components import ComponentManager
-from src.PyEng.components.input import Keyboard
-from src.PyEng.components.input import Mouse
+from src.PyEng.components.input import Keyboard, Mouse
 from src.PyEng.components.window import Window
 from src.PyEng.main.engine_config import EngineConfigs
 from src.PyEng.main.engine_files import EngineFiles
 from src.PyEng.utils.debugger import Debugger
 from src.PyEng.utils.error_manager import ErrorManager
 from src.shared import exceptions
+from src.shared.debug import LOGGER
 
 
 class Engine:
