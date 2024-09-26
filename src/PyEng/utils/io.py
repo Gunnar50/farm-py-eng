@@ -11,7 +11,7 @@ from src.shared.debug import LOGGER
 #  bound=game_components.BaseModel)
 
 
-def load_json(file_path: str):
+def load_json(file_path: os.PathLike):
   if os.path.exists(file_path):
     with open(file_path, 'r') as f:
       return json.load(f)

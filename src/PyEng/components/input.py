@@ -1,3 +1,4 @@
+from os import PathLike
 import sys
 import time
 from typing import Any
@@ -37,7 +38,7 @@ class InputState:
 
 class Input(SystemComponent):
 
-  def __init__(self, key_mappings_path: str):
+  def __init__(self, key_mappings_path: PathLike):
     SystemComponent.__init__(self)
     self.config: list[dict[str, Any]] = io.load_json(key_mappings_path)
     self.input = {
@@ -58,13 +59,14 @@ class Input(SystemComponent):
     return self.input[key].just_released if key in self.input else False
 
   def update(self):
+
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
         sys.exit()
 
       if event.type == pygame.KEYDOWN:
-        if event.button == pygame.K_ESCAPE:
+        if event.key == pygame.K_ESCAPE:
           pygame.quit()
           sys.exit()
 

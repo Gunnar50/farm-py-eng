@@ -25,6 +25,7 @@ class ComponentManager:  # Singleton
     # Prevent duplicates of the system elements
     if isinstance(component, SystemComponent):
       if component.id not in self.system_components_by_id.keys():
+        LOGGER.info(f'Adding component: {component}')
         self.system_components_by_id[component.id] = component
       else:
         LOGGER.error('Duplicate system component. Exiting...')
@@ -36,7 +37,7 @@ class ComponentManager:  # Singleton
     for component in self.system_components_by_id.values():
       component.update()
 
-  def components(self):
+  def get_components(self):
     return self.system_components_by_id.values()
 
   def __getitem__(self, _id: int):

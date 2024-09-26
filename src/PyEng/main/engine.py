@@ -17,12 +17,12 @@ class Engine:
   def __init__(self, configs: EngineConfigs):
     self.window: Window
     self.input: Input
+    self.components_manager = ComponentManager()
 
     self.check_assets_folder()
     self.create_global_components(configs)
     self.create_engine_components(configs)
 
-    self.components_manager = ComponentManager()
     self.close_flag = False
 
     Engine.__instance = self
@@ -32,6 +32,13 @@ class Engine:
     if cls.__instance is None:
       cls.create()
     return cls.__instance
+
+  def render(self):
+    pass
+
+  def update(self) -> None:
+    self.components_manager.update()
+    self.window.render(self.render)
 
   def check_assets_folder(self):
     if not os.path.exists(EngineFiles.ASSETS_FOLDER):
@@ -68,9 +75,6 @@ class Engine:
     #     self.keyboard,
     #     configs.ui_configs,
     # )
-
-  def update(self) -> None:
-    self.components_manager.update()
 
   def get_delta(self) -> float:
     return self.timer.get_delta()

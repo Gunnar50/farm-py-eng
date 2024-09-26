@@ -58,3 +58,13 @@ class Window(SystemComponent):
 
   def swap_buffers(self):
     pygame.display.flip()
+
+  def render(self, func):
+
+    def wrapper(*args, **kwargs):
+      self.clear()
+      result = func(*args, **kwargs)
+      self.swap_buffers()
+      return result
+
+    return wrapper
