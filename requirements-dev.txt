@@ -1,0 +1,6 @@
+isort==5.13.2
+pydantic==2.8.2
+pydantic_core==2.20.1
+pygame==2.5.2
+yapf==0.40.2
+pytest==8.3.3
