@@ -22,3 +22,6 @@ run:
 
 enum:
 	python ./scripts/generate_mappings.py
+
+test:
+	pytest --disable-warnings $(ARGS) -vv -s
