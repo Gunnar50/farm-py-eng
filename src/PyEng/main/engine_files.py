@@ -9,12 +9,13 @@ class EngineFiles:
   # All other folder will be relative to 'src'
   ROOT_FOLDER = Path(__file__).resolve().parents[3]
 
-  ASSETS_FOLDER = ROOT_FOLDER / "assets"
-  ERROR_FOLDER = ROOT_FOLDER / "ErrorLogs"
+  ASSETS_FOLDER = ROOT_FOLDER / 'assets'
+  ERROR_FOLDER = ROOT_FOLDER / 'ErrorLogs'
 
-  GUI_FOLDER = ASSETS_FOLDER / "GUI"
-  SOUNDS_FOLDER = ASSETS_FOLDER / "sounds"
-  FONT_FOLDER = ASSETS_FOLDER / "fonts"
+  GUI_FOLDER = ASSETS_FOLDER / 'GUI'
+  SOUNDS_FOLDER = ASSETS_FOLDER / 'sounds'
+  FONT_FOLDER = ASSETS_FOLDER / 'fonts'
+  KEY_MAPPINGS = ASSETS_FOLDER / 'config/key_mappings.json'
 
-  DEFAULT_FONT_ATLAS = FONT_FOLDER / "default.png"
-  DEFAULT_FONT_META = FONT_FOLDER / "default.fnt"
+  DEFAULT_FONT_ATLAS = FONT_FOLDER / 'default.png'
+  DEFAULT_FONT_META = FONT_FOLDER / 'default.fnt'
