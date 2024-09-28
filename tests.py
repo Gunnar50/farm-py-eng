@@ -35,7 +35,6 @@ def evaluate_input(user_input, variables):
 
 
 def draw_console():
-  screen.fill((0, 0, 0))  # Clear screen with black color
 
   # Draw previous console output
   y_offset = 0
@@ -49,6 +48,7 @@ def draw_console():
   screen.blit(input_surface, (10, 570))
 
   pygame.display.flip()
+  screen.fill((0, 0, 0))  # Clear screen with black color
 
 
 # Main loop
