@@ -16,3 +16,11 @@ class FilePathNotFound(Exception):
 
 class IllegalStateException(Exception):
   '''Raised when a component has an illegal state eg. not being initialised'''
+
+
+class IllegalRegistryOverwrite(Exception):
+  '''Raised when a registry is being overwritten'''
+
+
+class RegistryNotFoundException(Exception):
+  '''Raised when a registry is not found'''

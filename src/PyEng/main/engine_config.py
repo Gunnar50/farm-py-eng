@@ -3,7 +3,7 @@ class EngineConfigs:
   window_height = 720
   ui_size = 1.0
   fullscreen = 0
-  caption = "The Game"
+  title = "The Game"
   fps = 100
   vsync = False
   background_colour = (100, 100, 100)

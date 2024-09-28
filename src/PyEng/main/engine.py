@@ -38,7 +38,7 @@ class Engine:
 
   def update(self) -> None:
     self.components_manager.update()
-    self.window.render(self.render)
+    self.window.render()
 
   def check_assets_folder(self):
     if not os.path.exists(EngineFiles.ASSETS_FOLDER):
@@ -58,7 +58,7 @@ class Engine:
         window_width=configs.window_width,
         window_height=configs.window_height,
         fullscreen=configs.fullscreen,
-        caption=configs.caption,
+        caption=configs.title,
         fps=configs.fps,
         vsync=configs.vsync,
         background_colour=configs.background_colour,

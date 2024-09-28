@@ -1,5 +1,6 @@
 import json
 import os
+import pathlib
 from typing import Any, Generator, Iterable
 
 import pygame
@@ -11,7 +12,7 @@ from src.shared.debug import LOGGER
 #  bound=game_components.BaseModel)
 
 
-def load_json(file_path: os.PathLike):
+def load_json(file_path: pathlib.Path):
   if os.path.exists(file_path):
     with open(file_path, 'r') as f:
       return json.load(f)
