@@ -9,21 +9,19 @@ from src.shared.hash_registry import HashRegistry, Id
 
 
 class BlueprintLoader:
+  ENTITY_INFO_FILE = 'entity_info'
 
   def __init__(self, component_types: HashRegistry[ComponentType]) -> None:
     self.component_types = component_types
 
   def load_blueprint(self, folder: pathlib.Path) -> Blueprint:
     id = Id.gen(folder.name)
-    info_file = self.get_info_file(folder)
-    return self.load_info_file(id, folder, info_file)
+    info_json_file = self.get_info_file(folder)
+    info_data = load_json(info_json_file)
+    save_enabled = self.load_blueprint_settings(info_data)
+    components = CompBlueprintBundle(folder)
 
-  def load_info_file(self, id: 'Id', entity_folder: pathlib.Path,
-                     info_file: pathlib.Path) -> Blueprint:
-    reader = load_json(info_file)
-    save_enabled = self.load_blueprint_settings(reader)
-    components = CompBlueprintBundle(entity_folder)
-    for component_id, component_data in reader.items():
+    for component_id, component_data in info_data.items():
       components.add_component(
           self.load_component(component_id, component_data, components))
     return Blueprint(id, save_enabled, components.get_components())
