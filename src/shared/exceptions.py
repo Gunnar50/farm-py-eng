@@ -1,17 +1,17 @@
 class ComponentDuplicateError(Exception):
-  """Component duplicate error exception"""
+  '''Component duplicate error exception'''
 
 
 class ComponentNotFoundError(Exception):
-  """Component does not exist or was not found exception"""
+  '''Component does not exist or was not found exception'''
 
 
 class InvalidParameters(Exception):
-  """Raise when parameters are invilid"""
+  '''Raise when parameters are invilid'''
 
 
 class FilePathNotFound(Exception):
-  """Raise if a file path is not found"""
+  '''Raise if a file path is not found'''
 
 
 class IllegalStateException(Exception):
@@ -24,3 +24,7 @@ class IllegalRegistryOverwrite(Exception):
 
 class RegistryNotFoundException(Exception):
   '''Raised when a registry is not found'''
+
+
+class EntityInfoFileNotFound(Exception):
+  '''Raised if a entity info file does not exist'''
