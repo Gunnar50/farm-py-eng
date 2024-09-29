@@ -4,9 +4,6 @@ from src.PyEng.utils.io import load_json
 from src.shared import exceptions
 from src.shared.hash_registry import HashRegistry, Id
 
-# Create pydantic model for the blueprint file info.
-# use that to load the reader and the blueprint settings
-
 
 class BlueprintLoader:
   ENTITY_INFO_FILE = 'entity_info'
@@ -17,6 +14,8 @@ class BlueprintLoader:
   def load_blueprint(self, folder: pathlib.Path) -> Blueprint:
     id = Id.gen(folder.name)
     info_json_file = self.get_info_file(folder)
+    # Create pydantic model for the blueprint file info.
+    # use that to load the reader and the blueprint settings
     info_data = load_json(info_json_file)
     save_enabled = self.load_blueprint_settings(info_data)
     components = CompBlueprintBundle(folder)
