@@ -1,6 +1,7 @@
 import pathlib
 from src.FarmGame.entities.architecture.blueprint import Blueprint
 from src.PyEng.utils.io import load_json
+from src.shared import exceptions
 from src.shared.hash_registry import HashRegistry, Id
 
 # Create pydantic model for the blueprint file info.
@@ -42,4 +43,5 @@ class BlueprintLoader:
     for file in folder.iterdir():
       if file.name.startswith(self.ENTITY_INFO_FILE):
         return file
-    raise ProgramError(f'No entity info file found for {folder.name}')
+    raise exceptions.EntityInfoFileNotFound(
+        f'No entity info file found for {folder.name}')
