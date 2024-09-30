@@ -6,7 +6,7 @@ from typing import Any
 import pygame
 
 from src.PyEng.components.components import SystemComponent
-from src.PyEng.utils import io
+from shared import io
 from src.shared import api
 
 

@@ -4,7 +4,7 @@ from typing import Optional
 from PyEng.element_manager.components import SystemComponent
 from PyEng.shared import db_models
 from PyEng.shared.debug import LOGGER
-from PyEng.utils import io
+from shared import io
 
 
 class Database(SystemComponent):

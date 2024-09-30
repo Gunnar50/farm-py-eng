@@ -1,6 +1,6 @@
 import pathlib
 from src.FarmGame.entities.architecture.blueprint import Blueprint
-from src.PyEng.utils.io import load_json
+from shared.io import load_json
 from src.shared import exceptions
 from src.shared.hash_registry import HashRegistry, Id
 
