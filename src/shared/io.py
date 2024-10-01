@@ -1,24 +1,53 @@
 import json
 import os
 import pathlib
-from typing import Any, Generator, Iterable
+from typing import Any, Generator, Iterable, Type, TypeVar
 
+from isort import file
+import pydantic
 import pygame
 
 from src.shared import db_models, exceptions
 from src.shared.debug import LOGGER
 
-# DataclassModelType = TypeVar('DataclassModelType',
-#  bound=game_components.BaseModel)
+PydanticModelType = TypeVar('PydanticModelType', bound=pydantic.BaseModel)
 
 
-def load_json(file_path: pathlib.Path):
+def load_json(file_path: pathlib.Path) -> dict[str, Any]:
   if os.path.exists(file_path):
     with open(file_path, 'r') as f:
       return json.load(f)
   else:
     LOGGER.error(f'File path {file_path} not found. Exiting...')
     raise exceptions.FilePathNotFound
+
+
+def get_data_model(
+    ParametersClass: Type[PydanticModelType],
+    file_path: pathlib.Path,
+) -> PydanticModelType:
+  json_data = load_json(file_path)
+  values = {}
+
+  for attr, field in ParametersClass.model_fields.items():
+    if attr in json_data:
+      value = json_data.pop(attr)
+      # Check if we need to convert anything to a list
+      if (str(field.annotation).startswith('list[') and
+          not isinstance(value, list)):
+        values[attr] = [value]
+      else:
+        values[attr] = value
+
+  try:
+    result = ParametersClass(**values)
+  except pydantic.ValidationError:
+    raise exceptions.InvalidParameters
+
+  if json_data:
+    LOGGER.warning(f'Remaining data could be loaded: {json_data}')
+
+  return result
 
 
 def get_class_name(text: str):

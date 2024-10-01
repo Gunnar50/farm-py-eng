@@ -1,6 +1,7 @@
 import pathlib
+from shared import api
 from src.FarmGame.entities.architecture.blueprint import Blueprint
-from shared.io import load_json
+from shared import io
 from src.shared import exceptions
 from src.shared.hash_registry import HashRegistry, Id
 
@@ -16,7 +17,7 @@ class BlueprintLoader:
     info_json_file = self.get_info_file(folder)
     # Create pydantic model for the blueprint file info.
     # use that to load the reader and the blueprint settings
-    info_data = load_json(info_json_file)
+    info_data = io.get_data_model(api.EntityInfo, info_json_file)
     save_enabled = self.load_blueprint_settings(info_data)
     components = CompBlueprintBundle(folder)
 
