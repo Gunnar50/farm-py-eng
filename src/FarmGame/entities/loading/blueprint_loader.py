@@ -18,13 +18,12 @@ class BlueprintLoader:
     # Create pydantic model for the blueprint file info.
     # use that to load the reader and the blueprint settings
     info_data = io.get_data_model(api.EntityInfo, info_json_file)
-    save_enabled = self.load_blueprint_settings(info_data)
     components = CompBlueprintBundle(folder)
 
     for component_id, component_data in info_data.items():
       components.add_component(
           self.load_component(component_id, component_data, components))
-    return Blueprint(id, save_enabled, components.get_components())
+    return Blueprint(id, components.get_components())
 
   def load_component(self, component_id: str, component_data: dict,
                      components: CompBlueprintBundle) -> ComponentBlueprint:
@@ -33,9 +32,6 @@ class BlueprintLoader:
       raise ProgramError(
           f'Tried to load unknown component type: {component_id}')
     return loader.load(component_data, components)
-
-  def load_blueprint_settings(self, reader: dict) -> bool:
-    return reader.get('save', False)
 
   def get_info_file(self, folder: pathlib.Path) -> pathlib.Path:
     for file in folder.iterdir():
