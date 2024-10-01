@@ -36,3 +36,22 @@ class KeyMapping(enum.Enum):
   LEFT_CLICK = 'left_click'
   MIDDLE_CLICK = 'middle_click'
   RIGHT_CLICK = 'right_click'
+
+
+class TerrainType(enum.Enum):
+  GRASS = 'grass'
+  SOIL = 'soil'
+  PATH = 'path'
+
+
+class EntityInfo(pydantic.BaseModel):
+  name: str
+  group: str
+  layer: int
+  images: list[str]
+
+  terrain_type: TerrainType
+
+  stages: list[int]
+  grow_time: int
+  dry_out_time: int
