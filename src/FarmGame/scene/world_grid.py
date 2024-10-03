@@ -55,6 +55,12 @@ class Tile:
     grid_y = self.y + relative_y
     return self.grid.get_tile(grid_x, grid_y)
 
+  def get_tile_id(self) -> int:
+    return (self.x * self.grid.world_size) + self.y
+
+  def __str__(self) -> str:
+    return f'Tile({self.x}, {self.y})'
+
 
 class WorldGrid(serialisers.Exportable):
 
@@ -92,9 +98,10 @@ class WorldGrid(serialisers.Exportable):
       return None
 
   def get_serialiser(self) -> serialisers.Serialiser:
-    raise NotImplementedError
     return WorldGridSerialiser()
 
 
-class WorldGridSerialiser:
-  pass
+class WorldGridSerialiser(serialisers.Serialiser):
+
+  def export(self, writer) -> None:
+    raise NotImplementedError
