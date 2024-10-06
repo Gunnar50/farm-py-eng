@@ -1,7 +1,7 @@
 import os
 
 from src.PyEng.components.components import SystemComponent
-from shared import io
+from src.shared import io
 from src.shared.debug import LOGGER
 
 
