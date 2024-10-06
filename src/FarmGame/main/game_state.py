@@ -10,7 +10,7 @@ class EnumABCMeta(enum.EnumMeta, abc.ABCMeta):
   pass
 
 
-class GameState(enum.Enum, State, EnumABCMeta):
+class GameState(State, enum.Enum, metaclass=EnumABCMeta):
   NORMAL = 'normal'
   UI = 'ui'
   CAMERA = 'camera'
