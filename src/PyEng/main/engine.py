@@ -2,6 +2,7 @@ import os
 
 from src.PyEng.components.components import ComponentManager
 from src.PyEng.components.input import Input
+from src.PyEng.components.state_manager import StateManager
 from src.PyEng.components.window import Window
 from src.PyEng.main.engine_config import EngineConfigs
 from src.PyEng.main.engine_files import EngineFiles
@@ -61,8 +62,8 @@ class Engine:
     )
     # Set up keyboard and mouse inputs
     self.input = Input(EngineFiles.KEY_MAPPINGS)
+    self.state_manager = StateManager()
     # self.timer = FrameTimer(configs.fps)
-    # self.state_manager = StateManager()
 
     # Create UI
     # UserInterface(

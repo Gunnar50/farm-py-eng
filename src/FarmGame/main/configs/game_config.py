@@ -1,3 +1,4 @@
+from src.FarmGame.main.game_state import GameState
 from src.PyEng.main.engine_config import EngineConfigs
 from src.shared.version import Version
 
@@ -12,3 +13,5 @@ class GameConfig(EngineConfigs):
     self.show_debug = True
     self.auto_save = True
     self.session_creator = NotImplemented
+    self.initial_state = GameState.INITIAL
+    self.default_state = GameState.NORMAL

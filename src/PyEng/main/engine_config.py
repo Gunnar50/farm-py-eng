@@ -1,3 +1,6 @@
+from src.PyEng.components.state_manager import State
+
+
 class EngineConfigs:
   window_width = 1280
   window_height = 720
@@ -13,8 +16,8 @@ class EngineConfigs:
   # resources = Resources()
 
   # # Using an empty state by default
-  # initial_state = EmptyState()
-  # default_state = EmptyState()
+  initial_state = State()
+  default_state = State()
 
   debugger = None
 
