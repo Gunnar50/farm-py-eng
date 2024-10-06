@@ -52,13 +52,11 @@ class Window(SystemComponent):
 
   def update(self):
     self.clock.tick(self.fps)
+    self.swap_buffers()
+    self.clear()
 
   def clear(self):
     self.screen.fill(self.background_colour)
 
   def swap_buffers(self):
     pygame.display.flip()
-
-  def render(self):
-    self.swap_buffers()
-    self.clear()

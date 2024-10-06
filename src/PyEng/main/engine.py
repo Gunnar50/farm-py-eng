@@ -28,17 +28,13 @@ class Engine:
     Engine.__instance = self
 
   @classmethod
-  def get_instance(cls):
+  def get_instance(cls) -> 'Engine':
     if cls.__instance is None:
-      cls.create()
+      return cls.create()
     return cls.__instance
-
-  def render(self):
-    pass
 
   def update(self) -> None:
     self.components_manager.update()
-    self.window.render()
 
   def check_assets_folder(self):
     if not os.path.exists(EngineFiles.ASSETS_FOLDER):
