@@ -1,11 +1,22 @@
 import enum
 from typing import Optional
 
+from src.FarmGame.main.game import Game
 from src.shared import serialisers
 
 
 class Scene:
-  pass
+  WORLD_SIZE = 32
+
+  def __init__(self) -> None:
+    self.world_grid = WorldGrid(self, Scene.WORLD_SIZE)
+    self.terrain = TerrainGenerator(self.world_grid)
+
+  def update(self):
+    pass
+
+  def set_game(self, game: Game):
+    self.game = game
 
 
 class TileContents(serialisers.Exportable):
