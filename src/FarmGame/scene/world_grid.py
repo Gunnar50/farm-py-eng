@@ -1,8 +1,6 @@
 import enum
 from typing import Optional
 
-from click import Option
-from networkx import neighbors
 from src.shared import serialisers
 
 
@@ -10,10 +8,23 @@ class Scene:
   pass
 
 
-class TileContents:
+class TileContents(serialisers.Exportable):
 
   def __init__(self, tile: 'Tile') -> None:
-    pass
+    self.tile = tile
+    self.farmable = False
+
+  def is_farmable(self) -> bool:
+    return self.farmable
+
+  def get_serialiser(self) -> serialisers.Serialiser:
+    return TileContentsSerialiser()
+
+
+class TileContentsSerialiser(serialisers.Serialiser):
+
+  def export(self, writer) -> None:
+    raise NotImplementedError
 
 
 class Direction(enum.Enum):
@@ -26,7 +37,7 @@ class Direction(enum.Enum):
   SOUTH = (0, 1)
   SOUTH_EAST = (1, 1)
 
-  def __init__(self, relavite_x: int, relavite_y, int) -> None:
+  def __init__(self, relavite_x: int, relavite_y: int) -> None:
     self.relative_x = relavite_x
     self.relative_y = relavite_y
 
