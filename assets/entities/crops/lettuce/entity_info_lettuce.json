@@ -1,0 +1,19 @@
+{
+  "name": "lettuce",
+  "group": "crop",
+  "layer": 1,
+  "images": [
+    "crops/lettuce/lettuce_0.png",
+    "crops/lettuce/lettuce_1.png",
+    "crops/lettuce/lettuce_2.png",
+    "crops/lettuce/lettuce_3.png"
+  ],
+  "terrain_type": "SOIL",
+  "stages": [
+    1,
+    2,
+    3
+  ],
+  "grow_time": 100,
+  "dry_out_time": 50
+}

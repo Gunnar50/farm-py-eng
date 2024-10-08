@@ -1,0 +1,8 @@
+{
+  "label": "soil",
+  "group": "tile",
+  "layer": 0,
+  "image_path": [
+    "tiles/tile_soil.png"
+  ]
+}
