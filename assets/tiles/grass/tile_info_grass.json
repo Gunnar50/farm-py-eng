@@ -1,5 +1,5 @@
 {
-  "label": "grass",
+  "name": "grass",
   "group": "tile",
   "layer": 0,
   "image_path": [
