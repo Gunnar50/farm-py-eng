@@ -44,7 +44,11 @@ class TerrainType(enum.Enum):
   PATH = 'path'
 
 
-class EntityInfo(pydantic.BaseModel):
+class InfoFile(pydantic.BaseModel):
+  pass
+
+
+class EntityInfo(InfoFile):
   name: str
   group: str
   layer: int

@@ -14,5 +14,5 @@ class EntitySystem:
     self.loader = BlueprintRepositoryLoader(self.blueprints)
     # self.model_atlas = EntityModelAltlas()
 
-  def load_entities(self, entity_path: pathlib.Path):
+  def load_entities(self, entity_path: pathlib.Path) -> None:
     self.loader.load_entity_folder(entity_path)

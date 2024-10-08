@@ -8,7 +8,8 @@ class GameRepository:
     self.entity_system = EntitySystem()
     self.load_resources()
 
-  def load_resources(self):
+  def load_resources(self) -> None:
+    # Load all registries
     self.load_blueprints()
 
   def load_blueprints(self):

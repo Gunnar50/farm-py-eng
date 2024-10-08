@@ -62,7 +62,8 @@ class Engine:
     )
     # Set up keyboard and mouse inputs
     self.input = Input(EngineFiles.KEY_MAPPINGS)
-    self.state_manager = StateManager()
+    self.state_manager = StateManager(configs.default_state,
+                                      configs.initial_state)
     # self.timer = FrameTimer(configs.fps)
 
     # Create UI

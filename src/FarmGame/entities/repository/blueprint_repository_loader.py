@@ -1,5 +1,6 @@
 import pathlib
 
+from src.FarmGame.entities.architecture.blueprint import Blueprint
 from src.FarmGame.entities.loading.blueprint_loader import BlueprintLoader
 from src.shared.debug import LOGGER
 from src.shared.hash_registry import HashRegistry
@@ -7,13 +8,13 @@ from src.shared.hash_registry import HashRegistry
 
 class BlueprintRepositoryLoader:
 
-  def __init__(self, repository: HashRegistry[ComponentType]) -> None:
+  def __init__(self, repository: HashRegistry[Blueprint]) -> None:
     self.repository = repository
-    self.component_types: HashRegistry[ComponentType] = HashRegistry()
-    self.loader = BlueprintLoader(self.component_types)
+    # self.component_types: HashRegistry[ComponentType] = HashRegistry()
+    self.loader = BlueprintLoader()
 
-  def register_component_type(self, type: ComponentType):
-    self.component_types.register(type)
+  # def register_component_type(self, type: ComponentType):
+  #   self.component_types.register(type)
 
   def load_entity_folder(self, entity_folder: pathlib.Path) -> None:
     for item in entity_folder.iterdir():
@@ -28,6 +29,7 @@ class BlueprintRepositoryLoader:
       self.repository.register(blueprint)
     except Exception as ex:
       LOGGER.error(f'Failed to load blueprint: {file}')
+      # TODO: Push stack trace to a file
       LOGGER.error(f'Stack Trace: {str(ex)[:1000]}')
 
   def is_entity_folder(self, entity_folder: pathlib.Path) -> bool:
