@@ -3,6 +3,6 @@
   "group": "tile",
   "layer": 0,
   "image_path": [
-    "tiles/tile_grass.png"
+    "tile_grass.png"
   ]
 }

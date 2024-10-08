@@ -3,12 +3,12 @@
   "group": "crop",
   "layer": 1,
   "images": [
-    "crops/carrot/carrot_0.png",
-    "crops/carrot/carrot_1.png",
-    "crops/carrot/carrot_2.png",
-    "crops/carrot/carrot_3.png"
+    "carrot_0.png",
+    "carrot_1.png",
+    "carrot_2.png",
+    "carrot_3.png"
   ],
-  "terrain_type": "SOIL",
+  "terrain_type": "soil",
   "stages": [
     1,
     2,

@@ -3,12 +3,12 @@
   "group": "crop",
   "layer": 1,
   "images": [
-    "crops/lettuce/lettuce_0.png",
-    "crops/lettuce/lettuce_1.png",
-    "crops/lettuce/lettuce_2.png",
-    "crops/lettuce/lettuce_3.png"
+    "lettuce_0.png",
+    "lettuce_1.png",
+    "lettuce_2.png",
+    "lettuce_3.png"
   ],
-  "terrain_type": "SOIL",
+  "terrain_type": "soil",
   "stages": [
     1,
     2,
