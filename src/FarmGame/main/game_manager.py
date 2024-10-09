@@ -1,7 +1,7 @@
 from src.FarmGame.main.configs.game_config import GameConfig
 # from src.FarmGame.main.game import Game
 from src.FarmGame.main.game_state import GameState
-from src.FarmGame.repository.game_database import GameDatabase
+from src.FarmGame.repository.game_database import BlueprintDatabase
 # from src.FarmGame.scene.render import Render
 from src.PyEng.main.engine import Engine
 
@@ -12,14 +12,14 @@ class GameManager:
     self.configs = game_configs
     self.engine = Engine.create(game_configs)
 
-    self.game_repository = GameDatabase()
+    self.blueprint_db = BlueprintDatabase()
     # init game controls
     # init sounds
     # init session manager
     # self.renderer = Render()
     # self.current_game = Game(self.renderer)
 
-    for i in self.game_repository.entity_system.blueprints:
+    for i in self.blueprint_db.entity_system.blueprints:
       print(i.data)
 
   def update(self) -> None:

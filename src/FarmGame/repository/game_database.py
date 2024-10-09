@@ -2,7 +2,8 @@ from src.FarmGame.entities.entity_system import EntitySystem
 from src.FarmGame.repository.game_files import GameFiles
 
 
-class GameDatabase:
+# Game Repository
+class BlueprintDatabase:
 
   def __init__(self) -> None:
     self.entity_system = EntitySystem()
