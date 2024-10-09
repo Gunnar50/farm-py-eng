@@ -5,7 +5,7 @@ from src.FarmGame.entities.repository.blueprint_repository_loader import Bluepri
 from src.shared.hash_registry import HashRegistry
 
 
-class EntitySystem:
+class EntityBlueprint:
 
   def __init__(self) -> None:
     # HashRegistry it implements a iterable containing instances of Blueprint
