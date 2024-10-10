@@ -9,37 +9,6 @@ from src.shared.debug import LOGGER
 RegistrableType = TypeVar('RegistrableType', bound='Registrable')
 
 
-class UniqueId:
-  NAMESPACE = 'game'
-
-  def __init__(self, full_hash: int, name: str):
-    self.name = name
-    self.full_hash = full_hash
-    self.namespace_hash = hash(UniqueId.NAMESPACE)
-
-  @classmethod
-  def generate_id(cls, id: str) -> 'UniqueId':
-    id = f'{cls.NAMESPACE}:{id}'
-    return cls(hash(id), id)
-
-  @classmethod
-  def generate_for_access(cls, id: str) -> 'UniqueId':
-    id = f'{cls.NAMESPACE}:{id}'
-    return cls(hash(id))
-
-  def __hash__(self) -> int:
-    return self.full_hash
-
-  def __str__(self) -> str:
-    return self.name if self.name else f'Hash-{self.full_hash}'
-
-  def __eq__(self, other: object) -> bool:
-    if isinstance(other, UniqueId):
-      return self.full_hash == other.full_hash
-    else:
-      return False
-
-
 class Registrable(abc.ABC):
 
   @abc.abstractmethod

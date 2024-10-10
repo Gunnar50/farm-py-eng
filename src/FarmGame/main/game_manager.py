@@ -19,8 +19,8 @@ class GameManager:
     # self.renderer = Render()
     # self.current_game = Game(self.renderer)
 
-    for i in self.blueprint_db.entity_system.blueprints:
-      print(i.data)
+    for i in self.blueprint_db.entities:
+      print(i.terrain_type)
 
   def update(self) -> None:
     # If there is a session (game is running),
