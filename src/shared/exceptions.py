@@ -26,5 +26,5 @@ class RegistryNotFoundException(Exception):
   '''Raised when a registry is not found'''
 
 
-class EntityInfoFileNotFound(Exception):
+class InfoFileNotFound(Exception):
   '''Raised if a entity info file does not exist'''
