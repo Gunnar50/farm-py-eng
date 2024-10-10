@@ -1,88 +1,88 @@
-import sys
+import dataclasses
+import json
+from typing import Type, TypeVar, Any, cast
+import os
+import pathlib
 
 import pygame
 
-# Initialize Pygame
-pygame.init()
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption('In-Game Console Debugger')
-font = pygame.font.Font(None, 32)
-
-# Variables to monitor
-game_variables = {
-    'player_health': 100,
-    'player_position': (50, 100),
-    'enemy_count': 5,
-}
-
-# Input-related variables
-input_active = False
-input_text = ''
-console_output = []
+from src.FarmGame.repository.game_files import GameFiles
+from src.shared import exceptions
+from src.shared.debug import LOGGER
 
 
-def evaluate_input(user_input, variables):
-  try:
-    # If the input is a variable name, return its value
-    if user_input in variables:
-      return f"{user_input} = {variables[user_input]}"
-    # Otherwise, attempt to evaluate it as a Python expression
-    else:
-      result = eval(user_input, {}, variables)
-      return str(result)
-  except Exception as e:
-    return f"Error: {str(e)}"
+@dataclasses.dataclass
+class Blueprint:
+  """
+  Name: the unique name for this type of blueprint
+  Group: the group this blueprint belongs (eg. tile, entities, crop)
+  Layer: the layer that is rendered in (crops are rendered on top of tiles)
+  Images: tuple containing the loaded images
+  """
+  name: str
+  group: str
+  layer: int
+  images: list
 
 
-def draw_console():
-
-  # Draw previous console output
-  y_offset = 0
-  for line in console_output[-10:]:  # Display last 10 lines of output
-    text_surface = font.render(line, True, (255, 255, 255))
-    screen.blit(text_surface, (10, 10 + y_offset))
-    y_offset += 30
-
-  # Draw input text
-  input_surface = font.render('> ' + input_text, True, (0, 255, 0))
-  screen.blit(input_surface, (10, 570))
-
-  pygame.display.flip()
-  screen.fill((0, 0, 0))  # Clear screen with black color
+@dataclasses.dataclass
+class EntityBlueprint(Blueprint):
+  stages: list[int]
+  grow_time: int
+  dry_out_time: int
 
 
-# Main loop
-while True:
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      pygame.quit()
-      sys.exit()
+BlueprintType = TypeVar('BlueprintType')
 
-    if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_BACKQUOTE:  # Toggle console with backquote key (`)
-        input_active = not input_active
-        input_text = ''
 
-      elif input_active:
-        if event.key == pygame.K_RETURN:
-          # Evaluate input and append the result to the console output
-          result = evaluate_input(input_text.strip(), game_variables)
-          console_output.append(f"> {input_text}")
-          console_output.append(result)
-          input_text = ''
-
-        elif event.key == pygame.K_BACKSPACE:
-          # Remove last character from input text
-          input_text = input_text[:-1]
-
-        else:
-          # Append typed character to input text
-          input_text += event.unicode
-
-  if input_active:
-    draw_console()
+def load_json(file_path: pathlib.Path) -> dict[str, Any]:
+  if os.path.exists(file_path):
+    with open(file_path, 'r') as f:
+      return json.load(f)
   else:
-    screen.fill((0, 0, 0))  # Clear screen when console is not active
-    pygame.display.flip()
+    LOGGER.error(f'File path {file_path} not found. Exiting...')
+    raise exceptions.FilePathNotFound
 
-  pygame.time.Clock().tick(60)
+
+def get_data_model(
+    ParametersClass: Type[BlueprintType],
+    file_path: pathlib.Path,
+) -> BlueprintType:
+  if not dataclasses.is_dataclass(ParametersClass):
+    raise TypeError(f"{ParametersClass} is not a dataclass.")
+
+  json_data = load_json(file_path)
+  values = {}
+
+  for field in dataclasses.fields(ParametersClass):
+    attr = field.name
+    if attr in json_data:
+      value = json_data.pop(attr)
+      if attr == 'images' and isinstance(value, list):
+        value = [
+            pygame.image.load(file_path.parent / image).convert_alpha()
+            for image in value
+        ]
+      # Check if we need to convert anything to a list
+      if (field.type is list or hasattr(field.type, '__origin__') and
+          field.type.__origin__ is list) and not isinstance(value, list):
+        values[attr] = [value]
+      else:
+        values[attr] = value
+
+  try:
+    result = ParametersClass(**values)
+  except TypeError as e:
+    LOGGER.error(f'Error initializing dataclass: {e}')
+    raise ValueError(f'Error initializing dataclass: {e}')
+
+  if json_data:
+    LOGGER.warning(f'Remaining data that could not be loaded: {json_data}')
+
+  return cast(BlueprintType, result)
+
+
+get_data_model(
+    EntityBlueprint,
+    GameFiles.get_entities_folder() / 'crops' / 'carrot' /
+    'entity_info_carrot.json')
