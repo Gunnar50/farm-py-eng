@@ -37,6 +37,9 @@ class Engine:
   def update(self) -> None:
     self.components_manager.update()
 
+  def render(self) -> None:
+    self.renderer.render()
+
   def check_assets_folder(self):
     if not os.path.exists(EngineFiles.ASSETS_FOLDER):
       raise exceptions.IllegalStateException(

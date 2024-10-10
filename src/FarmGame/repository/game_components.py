@@ -38,6 +38,9 @@ class EntityBlueprint(Blueprint):
   grow_time: int
   dry_out_time: int
 
+  def create_instance(self):
+    pass
+
 
 @dataclasses.dataclass
 class ItemBlueprint(Blueprint):

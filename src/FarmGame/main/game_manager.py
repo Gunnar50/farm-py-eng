@@ -26,9 +26,11 @@ class GameManager:
     # If there is a session (game is running),
     # and the state is not main_menu
     # render the scene
-    # if self.engine.state_manager.is_not_state(GameState.MAIN_MENU,
-    #                                           GameState.INITIAL):
-    #   pass
+    if self.engine.state_manager.is_not_state(GameState.MAIN_MENU,
+                                              GameState.INITIAL):
+      # self.engine.render
+      # in the renderer
+      pass
 
     # self.current_game.update()
     # Update engine
