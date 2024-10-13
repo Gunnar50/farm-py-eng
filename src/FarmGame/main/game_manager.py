@@ -1,26 +1,36 @@
 from src.FarmGame.main.configs.game_config import GameConfig
-# from src.FarmGame.main.game import Game
 from src.FarmGame.main.game_state import GameState
+from src.FarmGame.main.session import Session
+from src.FarmGame.rendering.renderer import Renderer
 from src.FarmGame.repository.game_database import BlueprintDatabase
-# from src.FarmGame.scene.render import Render
+from src.PyEng.components.components import SystemComponent
 from src.PyEng.main.engine import Engine
 
 
-class GameManager:
+class GameManager(SystemComponent):
+  configs: GameConfig
+  engine: Engine
+  blueprint_db: BlueprintDatabase
+  renderer: Renderer
+  current_session: Session
 
-  def __init__(self, game_configs: GameConfig) -> None:
-    self.configs = game_configs
-    self.engine = Engine.create(game_configs)
+  def __init__(self, engine: Engine, add=True):
+    SystemComponent.__init__(self)
+    self.engine = engine
 
+    # Load blueprint for assets
     self.blueprint_db = BlueprintDatabase()
     # init game controls
     # init sounds
     # init session manager
-    # self.renderer = Render()
-    # self.current_game = Game(self.renderer)
+    self.renderer = Renderer()
+    self.current_session = Session(self.renderer)
 
-    for i in self.blueprint_db.entities:
-      print(i.terrain_type)
+    # for i in cls.blueprint_db.tiles:
+    #   print(i.tile_type)
+
+  def get_blueprint_database(self) -> BlueprintDatabase:
+    return self.blueprint_db
 
   def update(self) -> None:
     # If there is a session (game is running),
@@ -32,6 +42,4 @@ class GameManager:
       # in the renderer
       pass
 
-    # self.current_game.update()
-    # Update engine
-    self.engine.update()
+    self.current_session.update()
