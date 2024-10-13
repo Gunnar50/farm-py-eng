@@ -8,7 +8,7 @@
     "lettuce_2.png",
     "lettuce_3.png"
   ],
-  "terrain_type": "soil",
+  "tile_type": "soil",
   "stages": [
     1,
     2,

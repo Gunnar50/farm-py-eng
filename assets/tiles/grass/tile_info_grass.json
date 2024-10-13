@@ -2,7 +2,8 @@
   "name": "grass",
   "group": "tile",
   "layer": 0,
-  "image_path": [
+  "images": [
     "tile_grass.png"
-  ]
+  ],
+  "tile_type": "grass"
 }

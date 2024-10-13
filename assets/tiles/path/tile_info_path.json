@@ -2,7 +2,8 @@
   "name": "path",
   "group": "tile",
   "layer": 0,
-  "image_path": [
+  "images": [
     "tile_path.png"
-  ]
+  ],
+  "tile_type": "path"
 }

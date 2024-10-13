@@ -8,7 +8,7 @@
     "carrot_2.png",
     "carrot_3.png"
   ],
-  "terrain_type": "soil",
+  "tile_type": "soil",
   "stages": [
     1,
     2,
