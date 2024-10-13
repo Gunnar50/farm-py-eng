@@ -1,6 +1,6 @@
 from src.FarmGame.main.configs.game_config import GameConfig
 from src.FarmGame.main.game_state import GameState
-from src.FarmGame.main.session import Session
+from src.FarmGame.main.session import GameSession
 from src.FarmGame.repository.game_database import BlueprintDatabase
 from src.PyEng.components.components import SystemComponent
 from src.PyEng.main.engine import Engine
@@ -10,7 +10,7 @@ class GameManager(SystemComponent):
   configs: GameConfig
   engine: Engine
   blueprint_db: BlueprintDatabase
-  current_session: Session
+  current_session: GameSession
 
   def __init__(self, engine: Engine, add=True):
     SystemComponent.__init__(self)
@@ -21,7 +21,7 @@ class GameManager(SystemComponent):
     # init game controls
     # init sounds
     # init session manager
-    self.current_session = Session()
+    self.current_session = GameSession()
 
     # for i in cls.blueprint_db.tiles:
     #   print(i.tile_type)
