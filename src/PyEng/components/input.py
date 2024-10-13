@@ -1,13 +1,12 @@
-from os import PathLike
 import sys
 import time
+from os import PathLike
 from typing import Any
 
 import pygame
 
 from src.PyEng.components.components import SystemComponent
-from src.shared import io
-from src.shared import api
+from src.shared import api, io
 
 
 class InputState:
@@ -59,7 +58,6 @@ class Input(SystemComponent):
     return self.input[key].just_released if key in self.input else False
 
   def update(self):
-
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
