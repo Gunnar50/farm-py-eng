@@ -24,12 +24,3 @@ class BaseModel(pydantic.BaseModel):
           for path in values.image_path
       ]
     return values
-
-
-class Tile(BaseModel):
-  pass
-
-
-class Crop(BaseModel):
-  grow_time: Iterable[int]
-  amount: int
