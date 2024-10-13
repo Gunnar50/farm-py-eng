@@ -6,6 +6,7 @@ import pygame
 from src.FarmGame.main.configs.build_config import BuildConfig
 
 if TYPE_CHECKING:
+  from src.FarmGame.repository.game_components import TileType
   from src.FarmGame.repository.game_components import TileBlueprint
   from src.FarmGame.scene.world_grid import WorldGrid
 
@@ -28,7 +29,7 @@ class Direction(enum.Enum):
     return self.relative_x, self.relative_y
 
 
-class Tile:
+class GameObject:
   offset_x = (BuildConfig.window_width -
               (BuildConfig.map_width * BuildConfig.tile_width // 2) +
               (BuildConfig.map_height * BuildConfig.tile_width // 2)) // 2
@@ -39,13 +40,22 @@ class Tile:
       self,
       position: tuple[int, int],
       world_grid: 'WorldGrid',
-      components: 'TileBlueprint',
   ) -> None:
     self.x, self.y = position
     self.grid = world_grid
+
+
+class Tile(GameObject):
+
+  def __init__(
+      self,
+      position: tuple[int, int],
+      world_grid: 'WorldGrid',
+      components: 'TileBlueprint',
+  ) -> None:
+    GameObject.__init__(self, position, world_grid)
     self.components = components
     self.farmable = False
-    self.configs = BuildConfig.window_width
 
   def get_neighbours(self) -> list[Optional['Tile']]:
     return [
@@ -64,11 +74,10 @@ class Tile:
   def get_tile_id(self) -> int:
     return (self.x * self.grid.world_size) + self.y
 
+  def get_tile_type(self) -> 'TileType':
+    return self.components.tile_type
+
   def render_tile(self, screen: pygame.Surface, x, y):
-    # if self.image is None:
-    #   self.image = pygame.transform.scale(
-    #       pygame.image.load(self.image_path).convert_alpha(),
-    #       (TILE_WIDTH, TILE_HEIGHT))
     screen_x = self.offset_x + x * BuildConfig.tile_width // 2 - y * BuildConfig.tile_width // 2 - BuildConfig.tile_width // 2
     screen_y = self.offset_y + x * (
         BuildConfig.tile_height - BuildConfig.tile_height / 2) // 2 + y * (
