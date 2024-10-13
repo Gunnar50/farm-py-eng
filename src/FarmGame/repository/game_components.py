@@ -5,6 +5,7 @@ from typing import Iterable, Union
 
 import pygame
 
+from src.FarmGame.main.configs.build_config import BuildConfig
 from src.FarmGame.scene.tile import Tile
 from src.FarmGame.scene.world_grid import WorldGrid
 from src.shared.hash_registry import Registrable
@@ -29,7 +30,15 @@ class Blueprint(Registrable):
   name: str
   group: str
   layer: int
-  images: tuple[pygame.Surface]
+  images: list[pygame.Surface]
+
+  def __post_init__(self):
+    # Scale images to the correct tile size
+    self.images = [
+        pygame.transform.scale(
+            image, (BuildConfig.tile_width, BuildConfig.tile_height))
+        for image in self.images
+    ]
 
   def get_name(self) -> str:
     return self.name

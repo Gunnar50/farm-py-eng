@@ -42,9 +42,10 @@ def get_data_model(
 
       # Load the images into the blueprint
       elif attr == 'images' and isinstance(value, list):
-        value = tuple(
+        value = [
             pygame.image.load(file_path.parent / image).convert_alpha()
-            for image in value)
+            for image in value
+        ]
 
       # Check if we need to convert anything to a list
       if (field.type is list or hasattr(field.type, '__origin__') and
