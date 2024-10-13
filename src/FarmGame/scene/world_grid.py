@@ -8,18 +8,19 @@ from src.PyEng.main.engine import Engine
 from src.shared import serialisers
 
 
-class Scene:
+class Scene(GameComponent):
   WORLD_SIZE = 10
 
   def __init__(self) -> None:
+    GameComponent.__init__(self)
+    self.window = self.components_manager.get('window')
     self.world_grid = WorldGrid(self, Scene.WORLD_SIZE)
-    # self.terrain = TerrainGenerator(self.world_grid)
 
   def update(self):
     pass
 
   def render(self):
-    self.world_grid.render()
+    self.world_grid.render(self.window.screen)
 
 
 class WorldGrid(serialisers.Exportable, GameComponent):
@@ -27,8 +28,6 @@ class WorldGrid(serialisers.Exportable, GameComponent):
   def __init__(self, scene: Scene, world_size: int) -> None:
     serialisers.Exportable.__init__(self)
     GameComponent.__init__(self)
-    self.components_manager.get('window')
-    self.window = Engine.get_instance().window
     self.tiles: list[list[Tile]] = []
     self.scene = scene
     self.world_size = world_size
@@ -64,11 +63,11 @@ class WorldGrid(serialisers.Exportable, GameComponent):
     else:
       return None
 
-  def render(self):
+  def render(self, screen: pygame.Surface):
     for x in range(self.world_size):
       for y in range(self.world_size):
         game_object = self.tiles[x][y]
-        game_object.render_tile(self.window.screen, x, y)
+        game_object.render_tile(screen, x, y)
 
     # # draw selected tile
     # if selected_pos is not None and game_state == "game":
