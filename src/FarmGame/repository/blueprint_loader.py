@@ -1,14 +1,14 @@
 import dataclasses
 import pathlib
 from typing import Any, Type
+
+from src.FarmGame.repository.game_components import (Blueprint,
+                                                     EntityBlueprint,
+                                                     TileBlueprint)
 from src.FarmGame.repository.game_files import GameFiles
-from src.FarmGame.repository.game_components import Blueprint
-from src.FarmGame.repository.game_components import EntityBlueprint
-from src.shared import io
-from src.shared import exceptions
+from src.shared import exceptions, io
 from src.shared.debug import LOGGER
-from src.shared.hash_registry import HashRegistry
-from src.shared.hash_registry import Registrable
+from src.shared.hash_registry import HashRegistry, Registrable
 
 
 @dataclasses.dataclass
@@ -16,13 +16,6 @@ class BlueprintLoader:
   file_prefix: str
   blueprint_type: Type[Blueprint]
   folder: pathlib.Path
-
-  @classmethod
-  def load(cls) -> HashRegistry[EntityBlueprint]:
-    registry: HashRegistry[EntityBlueprint] = HashRegistry()
-    loader = cls(cls.file_prefix, cls.blueprint_type, cls.folder)
-    loader.load_folder(loader.folder, registry)
-    return registry
 
   def load_folder(self, folder: pathlib.Path,
                   repository: HashRegistry[Any]) -> None:
@@ -64,6 +57,20 @@ class EntityLoader(BlueprintLoader):
   @classmethod
   def load(cls) -> HashRegistry[EntityBlueprint]:
     registry: HashRegistry[EntityBlueprint] = HashRegistry()
+    loader = cls(cls.file_prefix, cls.blueprint_type, cls.folder)
+    loader.load_folder(loader.folder, registry)
+    return registry
+
+
+@dataclasses.dataclass
+class TilesLoader(BlueprintLoader):
+  file_prefix = 'tile_info'
+  blueprint_type = TileBlueprint
+  folder = GameFiles.get_tiles_folder()
+
+  @classmethod
+  def load(cls) -> HashRegistry[TileBlueprint]:
+    registry: HashRegistry[TileBlueprint] = HashRegistry()
     loader = cls(cls.file_prefix, cls.blueprint_type, cls.folder)
     loader.load_folder(loader.folder, registry)
     return registry
