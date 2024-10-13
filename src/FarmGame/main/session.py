@@ -1,6 +1,5 @@
 import pygame
 
-from src.FarmGame.rendering.renderer import Renderer
 from src.FarmGame.scene.world_grid import Scene
 
 
@@ -11,8 +10,7 @@ class Session:
   class and override its methods
   """
 
-  def __init__(self, renderer: Renderer) -> None:
-    self.renderer = renderer
+  def __init__(self) -> None:
     self.scene = Scene()
 
   def update(self):
