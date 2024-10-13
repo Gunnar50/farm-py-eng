@@ -1,103 +1,48 @@
-import enum
 from typing import Optional
 
-from src.FarmGame.main.game import Game
+import pygame
+
+from src.FarmGame.scene.tile import Tile
+from src.PyEng.components.components import GameComponent
+from src.PyEng.main.engine import Engine
 from src.shared import serialisers
 
 
 class Scene:
-  WORLD_SIZE = 32
+  WORLD_SIZE = 10
 
   def __init__(self) -> None:
     self.world_grid = WorldGrid(self, Scene.WORLD_SIZE)
-    self.terrain = TerrainGenerator(self.world_grid)
+    # self.terrain = TerrainGenerator(self.world_grid)
 
   def update(self):
     pass
 
-  def set_game(self, game: Game):
-    self.game = game
+  def render(self):
+    self.world_grid.render()
 
 
-class TileContents(serialisers.Exportable):
-
-  def __init__(self, tile: 'Tile') -> None:
-    self.tile = tile
-    self.farmable = False
-
-  def is_farmable(self) -> bool:
-    return self.farmable
-
-  def get_serialiser(self) -> serialisers.Serialiser:
-    return TileContentsSerialiser()
-
-
-class TileContentsSerialiser(serialisers.Serialiser):
-
-  def export(self, writer) -> None:
-    raise NotImplementedError
-
-
-class Direction(enum.Enum):
-  NORTH_WEST = (-1, -1)
-  NORTH = (0, -1)
-  NORTH_EAST = (1, -1)
-  WEST = (-1, 0)
-  EAST = (1, 0)
-  SOUTH_WEST = (-1, 1)
-  SOUTH = (0, 1)
-  SOUTH_EAST = (1, 1)
-
-  def __init__(self, relavite_x: int, relavite_y: int) -> None:
-    self.relative_x = relavite_x
-    self.relative_y = relavite_y
-
-  def get_relative_pos(self) -> tuple[int, int]:
-    return self.relative_x, self.relative_y
-
-
-class Tile:
-
-  def __init__(self, x, y, world_grid: 'WorldGrid') -> None:
-    self.x, self.y = x, y
-    self.grid = world_grid
-    self.contents = TileContents(self)
-
-  def get_neighbours(self) -> list[Optional['Tile']]:
-    return [
-        self.get_neighbour(Direction.NORTH),
-        self.get_neighbour(Direction.EAST),
-        self.get_neighbour(Direction.SOUTH),
-        self.get_neighbour(Direction.WEST),
-    ]
-
-  def get_neighbour(self, direction: Direction) -> Optional['Tile']:
-    relative_x, relative_y = direction.get_relative_pos()
-    grid_x = self.x + relative_x
-    grid_y = self.y + relative_y
-    return self.grid.get_tile(grid_x, grid_y)
-
-  def get_tile_id(self) -> int:
-    return (self.x * self.grid.world_size) + self.y
-
-  def __str__(self) -> str:
-    return f'Tile({self.x}, {self.y})'
-
-
-class WorldGrid(serialisers.Exportable):
+class WorldGrid(serialisers.Exportable, GameComponent):
 
   def __init__(self, scene: Scene, world_size: int) -> None:
     serialisers.Exportable.__init__(self)
+    GameComponent.__init__(self)
+    self.components_manager.get('window')
+    self.window = Engine.get_instance().window
     self.tiles: list[list[Tile]] = []
     self.scene = scene
     self.world_size = world_size
+    self.tile_blueprints = self.components_manager.get(
+        'GameManager').get_blueprint_database().tiles
     self.setup_grid(world_size)
 
   def setup_grid(self, size):
     for x in range(size):
       row = []
       for y in range(size):
-        row.append(Tile(x, y, self))
+        row.append(
+            self.tile_blueprints.get('stone_path').create_instance((x, y),
+                                                                   self))
       self.tiles.append(row)
 
   def add_tile(self, tile: Tile) -> None:
@@ -118,6 +63,16 @@ class WorldGrid(serialisers.Exportable):
       return self.tiles[x][y]
     else:
       return None
+
+  def render(self):
+    for x in range(self.world_size):
+      for y in range(self.world_size):
+        game_object = self.tiles[x][y]
+        game_object.render_tile(self.window.screen, x, y)
+
+    # # draw selected tile
+    # if selected_pos is not None and game_state == "game":
+    #   self.selection_tile.draw_tile(screen, *selected_pos)
 
   def get_serialiser(self) -> serialisers.Serialiser:
     return WorldGridSerialiser()
