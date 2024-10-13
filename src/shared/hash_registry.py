@@ -1,6 +1,6 @@
 import abc
-from typing import Optional, TypeVar, Generic, Iterator
 from collections.abc import Iterable
+from typing import Generic, Iterator, Optional, TypeVar
 
 from src.shared import exceptions
 from src.shared.debug import LOGGER
@@ -33,15 +33,15 @@ class HashRegistry(Generic[RegistrableType], Iterable):
     for item in items:
       self.register(item)
 
-  def get(self, name: str) -> Optional[RegistrableType]:
+  def get_null(self, name: str) -> Optional[RegistrableType]:
     item = self.map.get(name)
     if item is None:
       LOGGER.warning(
           f"No entry found in {self.registry_name} registry with ID: {name}")
     return item
 
-  def get_not_null(self, string_id: str) -> RegistrableType:
-    item = self.get(string_id)
+  def get(self, string_id: str) -> RegistrableType:
+    item = self.get_null(string_id)
     if item is None:
       raise exceptions.RegistryNotFoundException(
           f"No entry found in {self.registry_name} registry with ID: {string_id}"

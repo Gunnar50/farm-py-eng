@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 # Add the root of the project to sys.path
 sys.path.insert(

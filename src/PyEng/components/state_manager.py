@@ -1,8 +1,10 @@
-from opcode import stack_effect
+import abc
 import sys
 from typing import Union
+
 import pygame
-import abc
+from opcode import stack_effect
+
 from src.PyEng.components.components import SystemComponent
 
 

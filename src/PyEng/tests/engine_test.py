@@ -1,9 +1,10 @@
 from unittest import mock
+
 import pytest
 
+from src.PyEng.main.engine import Engine
 from src.PyEng.main.engine_config import EngineConfigs
 from src.shared import exceptions
-from src.PyEng.main.engine import Engine
 
 
 @pytest.fixture(autouse=True)

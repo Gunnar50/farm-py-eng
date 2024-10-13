@@ -7,7 +7,6 @@ import pygame
 
 from src.FarmGame.scene.tile import Tile
 from src.FarmGame.scene.world_grid import WorldGrid
-
 from src.shared.hash_registry import Registrable
 
 

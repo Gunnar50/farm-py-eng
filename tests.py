@@ -1,8 +1,8 @@
 import dataclasses
 import json
-from typing import Type, TypeVar, Any, cast
 import os
 import pathlib
+from typing import Any, Type, TypeVar, cast
 
 import pygame
 
