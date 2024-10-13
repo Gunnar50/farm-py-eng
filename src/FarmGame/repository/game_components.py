@@ -1,17 +1,22 @@
 import dataclasses
 import enum
 import random
-from typing import Iterable, Optional, Union
+from typing import Iterable, Union
 
 import pygame
+
+from src.FarmGame.scene.tile import Tile
+from src.FarmGame.scene.world_grid import WorldGrid
 
 from src.shared.hash_registry import Registrable
 
 
-class TerrainType(enum.Enum):
+class TileType(enum.Enum):
   GRASS = 'grass'
   SOIL = 'soil'
   PATH = 'path'
+  SELECTION = 'selection'
+  STONE_PATH = 'stone_path'
 
 
 @dataclasses.dataclass
@@ -33,7 +38,7 @@ class Blueprint(Registrable):
 
 @dataclasses.dataclass
 class EntityBlueprint(Blueprint):
-  terrain_type: TerrainType
+  tile_type: TileType
   stages: list[int]
   grow_time: int
   dry_out_time: int
@@ -49,8 +54,11 @@ class ItemBlueprint(Blueprint):
 
 
 @dataclasses.dataclass
-class Tile(Blueprint):
-  pass
+class TileBlueprint(Blueprint):
+  tile_type: TileType
+
+  def create_instance(self, position: tuple[int, int], grid: WorldGrid) -> Tile:
+    return Tile(position, grid, self)
 
 
 @dataclasses.dataclass
