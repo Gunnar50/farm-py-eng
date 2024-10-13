@@ -5,13 +5,11 @@ from src.shared.version import Version
 
 class GameConfig(EngineConfigs):
   """Game Configs"""
-
-  def __init__(self) -> None:
-    self.version = Version(0, 0, 0)
-    self.game_speed = 1
-    self.cheats = True
-    self.show_debug = True
-    self.auto_save = True
-    self.session_creator = NotImplemented
-    self.initial_state = GameState.INITIAL
-    self.default_state = GameState.NORMAL
+  version = Version(0, 0, 0)
+  game_speed = 1
+  cheats = True
+  show_debug = True
+  auto_save = True
+  session_creator = NotImplemented
+  initial_state = GameState.INITIAL
+  default_state = GameState.NORMAL
