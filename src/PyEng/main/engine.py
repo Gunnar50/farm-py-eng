@@ -15,7 +15,7 @@ from src.shared.debug import LOGGER
 class Engine:
   __instance = None
 
-  def __init__(self, configs: EngineConfigs):
+  def __init__(self, configs: type[EngineConfigs]):
     self.window: Window
     self.input: Input
     self.components_manager = ComponentManager()
@@ -46,13 +46,13 @@ class Engine:
           f"Can't create engine - assets folder not found in root directory: {EngineFiles.ROOT_FOLDER}."
       )
 
-  def create_global_components(self, configs: EngineConfigs):
+  def create_global_components(self, configs: type[EngineConfigs]):
     # Create global systems
     ErrorManager(EngineFiles.ERROR_FOLDER)
     Debugger(configs.debugger)
     # BackgroundLoader()
 
-  def create_engine_components(self, configs: EngineConfigs):
+  def create_engine_components(self, configs: type[EngineConfigs]):
     # Create engine components
     self.window = Window(
         window_width=configs.window_width,
@@ -91,7 +91,7 @@ class Engine:
   @classmethod
   def create(
       cls,
-      configs: EngineConfigs = EngineConfigs.get_default_configs(),
+      configs: type[EngineConfigs] = EngineConfigs.get_default_configs(),
   ) -> 'Engine':
     if cls.__instance is not None:
       raise exceptions.IllegalStateException(
