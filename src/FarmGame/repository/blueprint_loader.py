@@ -1,9 +1,9 @@
 import dataclasses
+import os
 import pathlib
 from typing import Any, Type
 
-from src.FarmGame.repository.game_components import (Blueprint,
-                                                     EntityBlueprint,
+from src.FarmGame.repository.game_components import (Blueprint, EntityBlueprint,
                                                      ItemBlueprint,
                                                      TileBlueprint)
 from src.FarmGame.repository.game_files import GameFiles
@@ -20,6 +20,9 @@ class BlueprintLoader:
 
   def load_folder(self, folder: pathlib.Path,
                   repository: HashRegistry[Any]) -> None:
+    if not os.path.exists(folder):
+      raise exceptions.FilePathNotFound(f'Path {folder} not found.')
+
     for item in folder.iterdir():
       if self.is_folder(item):
         self.load_file(item, repository)
