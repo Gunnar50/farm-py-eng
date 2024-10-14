@@ -6,8 +6,7 @@ import pygame
 from src.FarmGame.main.configs.build_config import BuildConfig
 
 if TYPE_CHECKING:
-  from src.FarmGame.repository.game_components import TileType
-  from src.FarmGame.repository.game_components import TileBlueprint
+  from src.FarmGame.repository.game_components import TileBlueprint, TileType
   from src.FarmGame.scene.world_grid import WorldGrid
 
 

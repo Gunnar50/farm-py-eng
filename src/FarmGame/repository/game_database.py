@@ -1,4 +1,5 @@
-from src.FarmGame.repository.blueprint_loader import EntityLoader, TilesLoader
+from src.FarmGame.repository.blueprint_loader import (EntityLoader, ItemLoader,
+                                                      TilesLoader)
 
 
 # Game Repository
@@ -9,5 +10,4 @@ class BlueprintDatabase:
     # HashRegistry it implements a iterable containing instances of Blueprint
     self.entities = EntityLoader.load()
     self.tiles = TilesLoader.load()
-
-    # self.items = ItemBlueprint()
+    self.items = ItemLoader.load()

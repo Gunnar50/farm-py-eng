@@ -57,8 +57,9 @@ class EntityBlueprint(Blueprint):
 
 @dataclasses.dataclass
 class ItemBlueprint(Blueprint):
-  stages: list[int]
-  grow_time: int
+
+  def create_instance(self):
+    pass
 
 
 @dataclasses.dataclass

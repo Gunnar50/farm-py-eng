@@ -4,6 +4,7 @@ from typing import Any, Type
 
 from src.FarmGame.repository.game_components import (Blueprint,
                                                      EntityBlueprint,
+                                                     ItemBlueprint,
                                                      TileBlueprint)
 from src.FarmGame.repository.game_files import GameFiles
 from src.shared import exceptions, io
@@ -56,7 +57,8 @@ class EntityLoader(BlueprintLoader):
 
   @classmethod
   def load(cls) -> HashRegistry[EntityBlueprint]:
-    registry: HashRegistry[EntityBlueprint] = HashRegistry()
+    registry: HashRegistry[EntityBlueprint] = HashRegistry(
+        registry_name='entities')
     loader = cls(cls.file_prefix, cls.blueprint_type, cls.folder)
     loader.load_folder(loader.folder, registry)
     return registry
@@ -70,7 +72,21 @@ class TilesLoader(BlueprintLoader):
 
   @classmethod
   def load(cls) -> HashRegistry[TileBlueprint]:
-    registry: HashRegistry[TileBlueprint] = HashRegistry()
+    registry: HashRegistry[TileBlueprint] = HashRegistry(registry_name='tiles')
+    loader = cls(cls.file_prefix, cls.blueprint_type, cls.folder)
+    loader.load_folder(loader.folder, registry)
+    return registry
+
+
+@dataclasses.dataclass
+class ItemLoader(BlueprintLoader):
+  file_prefix = 'item_info'
+  blueprint_type = ItemBlueprint
+  folder = GameFiles.get_items_folder()
+
+  @classmethod
+  def load(cls) -> HashRegistry[ItemBlueprint]:
+    registry: HashRegistry[ItemBlueprint] = HashRegistry(registry_name='items')
     loader = cls(cls.file_prefix, cls.blueprint_type, cls.folder)
     loader.load_folder(loader.folder, registry)
     return registry
