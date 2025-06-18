@@ -1,5 +1,4 @@
 import dataclasses
-import os
 import pathlib
 from typing import Any, Type
 
@@ -8,8 +7,7 @@ from src.FarmGame.repository.game_components import (Blueprint, EntityBlueprint,
                                                      TileBlueprint)
 from src.FarmGame.repository.game_files import GameFiles
 from src.shared import exceptions, io
-from src.shared.debug import LOGGER
-from src.shared.hash_registry import HashRegistry, Registrable
+from src.shared.hash_registry import HashRegistry
 
 
 @dataclasses.dataclass
@@ -20,8 +18,10 @@ class BlueprintLoader:
 
   def load_folder(self, folder: pathlib.Path,
                   repository: HashRegistry[Any]) -> None:
-    if not os.path.exists(folder):
-      raise exceptions.FilePathNotFound(f'Path {folder} not found.')
+
+    if not folder.exists():
+      raise exceptions.FilePathNotFound(
+          f'The following file path was not found: {folder}')
 
     for item in folder.iterdir():
       if self.is_folder(item):
@@ -31,14 +31,9 @@ class BlueprintLoader:
 
   def load_file(self, folder: pathlib.Path,
                 repository: HashRegistry[Blueprint]) -> None:
-    try:
-      info_json_file = self.get_info_file(folder)
-      blueprint = io.get_data_model(self.blueprint_type, info_json_file)
-      repository.register(blueprint)
-    except Exception as ex:
-      LOGGER.error(f'Failed to load blueprint: {folder}')
-      # TODO: Push stack trace to a file
-      LOGGER.error(f'Stack Trace: {str(ex)[:1000]}')
+    info_json_file = self.get_info_file(folder)
+    blueprint = io.get_data_model(self.blueprint_type, info_json_file)
+    repository.register(blueprint)
 
   def is_folder(self, folder: pathlib.Path) -> bool:
     # Check if any file in the folder ends with .json
@@ -49,6 +44,7 @@ class BlueprintLoader:
     for file in folder.iterdir():
       if file.name.startswith(self.file_prefix):
         return file
+
     raise exceptions.InfoFileNotFound(f'No info file found for {folder.name}')
 
 
