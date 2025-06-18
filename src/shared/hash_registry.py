@@ -18,14 +18,14 @@ class Registrable(abc.ABC):
 
 class HashRegistry(Generic[RegistrableType], Iterable):
 
-  def __init__(self, registry_name: str = "hash"):
+  def __init__(self, registry_name: str = 'hash'):
     self.registry_name = registry_name
     self.map: dict[str, RegistrableType] = {}
 
   def register(self, item: RegistrableType) -> None:
     if item.get_name() in self.map:
       raise exceptions.IllegalRegistryOverwrite(
-          f"{self.registry_name} REGISTRY OVERWRITE: {item.get_name()}")
+          f'{self.registry_name} REGISTRY OVERWRITE: {item.get_name()}')
     else:
       self.map[item.get_name()] = item
 
@@ -37,14 +37,14 @@ class HashRegistry(Generic[RegistrableType], Iterable):
     item = self.map.get(name)
     if item is None:
       LOGGER.warning(
-          f"No entry found in {self.registry_name} registry with ID: {name}")
+          f'No entry found in {self.registry_name} registry with ID: {name}')
     return item
 
   def get(self, string_id: str) -> RegistrableType:
     item = self.get_null(string_id)
     if item is None:
       raise exceptions.RegistryNotFoundException(
-          f"No entry found in {self.registry_name} registry with ID: {string_id}"
+          f'No entry found in {self.registry_name} registry with ID: {string_id}'
       )
     return item
 
