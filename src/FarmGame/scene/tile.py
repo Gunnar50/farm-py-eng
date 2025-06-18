@@ -77,12 +77,14 @@ class Tile(GameObject):
     return self.components.tile_type
 
   def render_tile(self, screen: pygame.Surface, x, y):
-    screen_x = self.offset_x + x * BuildConfig.tile_width // 2 - y * BuildConfig.tile_width // 2 - BuildConfig.tile_width // 2
+    screen_x = (self.offset_x + x * BuildConfig.tile_width // 2 -
+                y * BuildConfig.tile_width // 2 - BuildConfig.tile_width // 2)
     screen_y = self.offset_y + x * (
         BuildConfig.tile_height - BuildConfig.tile_height / 2) // 2 + y * (
             BuildConfig.tile_height -
             BuildConfig.tile_height / 2) // 2 - BuildConfig.tile_height // 2
 
+    # This is to only render tiles that are visible to the player (within the window)
     if (-BuildConfig.tile_width <= screen_x <= BuildConfig.window_width) and (
         -BuildConfig.tile_height <= screen_y <= BuildConfig.window_height):
       screen.blit(self.components.images[0], (screen_x, screen_y))
