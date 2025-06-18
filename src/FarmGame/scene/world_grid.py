@@ -13,7 +13,7 @@ class Scene(GameComponent):
 
   def __init__(self) -> None:
     GameComponent.__init__(self)
-    self.window = self.components_manager.get('window')
+    self.window = Engine.get_instance().window
     self.world_grid = WorldGrid(self, Scene.WORLD_SIZE)
 
   def update(self):
@@ -31,8 +31,8 @@ class WorldGrid(serialisers.Exportable, GameComponent):
     self.tiles: list[list[Tile]] = []
     self.scene = scene
     self.world_size = world_size
-    self.tile_blueprints = self.components_manager.get(
-        'GameManager').get_blueprint_database().tiles
+    game_manager_component = self.components_manager.get_game_manager()
+    self.tile_blueprints = game_manager_component.get_blueprint_database().tiles
     self.setup_grid(world_size)
 
   def setup_grid(self, size):
@@ -69,7 +69,7 @@ class WorldGrid(serialisers.Exportable, GameComponent):
         game_object = self.tiles[x][y]
         game_object.render_tile(screen, x, y)
 
-    # # draw selected tile
+    # draw selected tile
     # if selected_pos is not None and game_state == "game":
     #   self.selection_tile.draw_tile(screen, *selected_pos)
 
