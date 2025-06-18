@@ -73,7 +73,7 @@ class TileBlueprint(Blueprint):
 @dataclasses.dataclass
 class Crop(EntityBlueprint):
   # Grow time is amount in seconds
-  grow_time: Iterable[int]
+  grow_time: int
   amount: Union[int, Iterable[int]]
   next_growth_time: float = 0.0
 
