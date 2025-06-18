@@ -1,9 +1,4 @@
 import abc
-import sys
-from typing import Union
-
-import pygame
-from opcode import stack_effect
 
 from src.PyEng.components.components import SystemComponent
 
