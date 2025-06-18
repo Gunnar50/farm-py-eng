@@ -1,3 +1,7 @@
 __pycache__
 PyEng/__pycache__
 .pytype
+ErrorLogs/
+
+# Key mappings are generated locally
+src/shared/key_mappings.py
