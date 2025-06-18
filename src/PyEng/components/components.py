@@ -1,13 +1,13 @@
 from collections import defaultdict
-from typing import Any, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from src.shared import exceptions
 from src.shared.debug import LOGGER
 
-"""
-ID ranges
-System components: 1000 - 1999
-"""
+if TYPE_CHECKING:
+  from src.PlatformerGame.main.game_manager import GameManager
+  from src.PyEng.components.input import Input
+  from src.PyEng.components.window import Window
 
 
 class ComponentManager:  # Singleton
@@ -15,7 +15,7 @@ class ComponentManager:  # Singleton
   
   This is a singleton component that handles all the system and game components
   """
-  __instance = None
+  __instance: 'ComponentManager | None' = None
 
   def __new__(cls, *args, **kwargs):
     if cls.__instance is None:
@@ -23,24 +23,24 @@ class ComponentManager:  # Singleton
     return cls.__instance
 
   def __init__(self):
-    self.system_components_by_name: dict[str, SystemComponent] = {}
-    self.game_components_by_name: dict[str,
-                                       list[GameComponent]] = defaultdict(list)
+    self.system_components_by_name = {}
+    self.game_components_by_name = defaultdict(list)
 
   def add_element(self, component: 'Component') -> None:
     # Prevent duplicates of the system elements
     if isinstance(component, SystemComponent):
-      if component.name not in self.system_components_by_name.keys():
+      if component.class_name not in self.system_components_by_name.keys():
         LOGGER.info(f'Adding component: {component}')
-        LOGGER.info(f'Component Type: {type(component)}')
-        self.system_components_by_name[component.name] = component
+        self.system_components_by_name[component.class_name] = component
       else:
-        LOGGER.error('Duplicate system component. Exiting...')
-        raise exceptions.ComponentDuplicateError
+        raise exceptions.ComponentDuplicateError(
+            f'Duplicate system component: {component.class_name}')
+
     elif isinstance(component, GameComponent):
-      self.game_components_by_name[component.name].append(component)
+      self.game_components_by_name[component.class_name].append(component)
     else:
-      raise exceptions.ComponentNotFoundError
+      raise exceptions.ComponentNotFoundError(
+          f'Trying to add non existent component: {component}')
 
   def update(self) -> None:
     for component in self.system_components_by_name.values():
@@ -50,9 +50,34 @@ class ComponentManager:  # Singleton
     return self.system_components_by_name.values()
 
   # TODO find a way to return correct type
-  def get(self, name: str) -> Any:
+  def get_by_class(self, class_name: str) -> Any:
+    if class_name.lower() not in self.system_components_by_name.keys():
+      raise exceptions.ComponentNotFoundError(
+          f'Class name not found: {class_name}')
+
+    component = self.system_components_by_name[class_name.lower()]
+    return component
+
+  def get_game_manager(self) -> 'GameManager':
+    name = 'GameManager'
     if name.lower() not in self.system_components_by_name.keys():
-      raise exceptions.ComponentNotFoundError
+      raise exceptions.ComponentNotFoundError(f'Class name not found: {name}')
+
+    component = self.system_components_by_name[name.lower()]
+    return component
+
+  def get_window(self) -> 'Window':
+    name = 'Window'
+    if name.lower() not in self.system_components_by_name.keys():
+      raise exceptions.ComponentNotFoundError(f'Class name not found: {name}')
+
+    component = self.system_components_by_name[name.lower()]
+    return component
+
+  def get_input(self) -> 'Input':
+    name = 'Input'
+    if name.lower() not in self.system_components_by_name.keys():
+      raise exceptions.ComponentNotFoundError(f'Class name not found: {name}')
 
     component = self.system_components_by_name[name.lower()]
     return component
@@ -63,7 +88,7 @@ class Component:
 
   def __init__(self, custom_id: Optional[int] = None, add=True):
     self.custom_id = custom_id
-    self.name = self.__class__.__name__.lower()
+    self.class_name = self.__class__.__name__.lower()
     if add:
       self.components_manager.add_element(self)
 
