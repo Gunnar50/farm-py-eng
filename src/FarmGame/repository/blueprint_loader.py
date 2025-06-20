@@ -2,7 +2,8 @@ import dataclasses
 import pathlib
 from typing import Any, Type
 
-from src.FarmGame.repository.game_components import (Blueprint, EntityBlueprint,
+from src.FarmGame.repository.game_components import (Blueprint,
+                                                     EntityBlueprint,
                                                      ItemBlueprint,
                                                      TileBlueprint)
 from src.FarmGame.repository.game_files import GameFiles
