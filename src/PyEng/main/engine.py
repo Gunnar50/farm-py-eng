@@ -10,7 +10,6 @@ from src.PyEng.main.engine_files import EngineFiles
 from src.PyEng.utils.debugger import Debugger
 from src.PyEng.utils.error_manager import ErrorManager
 from src.shared import exceptions
-from src.shared.debug import LOGGER
 
 
 class Engine:

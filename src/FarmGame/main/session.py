@@ -1,5 +1,3 @@
-import pygame
-
 from src.FarmGame.scene.world_grid import Scene
 
 

@@ -5,7 +5,7 @@ from src.shared import exceptions
 from src.shared.debug import LOGGER
 
 if TYPE_CHECKING:
-  from src.PlatformerGame.main.game_manager import GameManager
+  from src.FarmGame.main.game_manager import GameManager
   from src.PyEng.components.input import Input
   from src.PyEng.components.window import Window
 

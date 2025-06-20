@@ -30,7 +30,7 @@ class GameApp:
     # self.game_manager.clean_up()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   # EngineTester().run()
   GameApp().run()
   # GameApp()

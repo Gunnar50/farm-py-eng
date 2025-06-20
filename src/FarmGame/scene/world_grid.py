@@ -39,9 +39,8 @@ class WorldGrid(serialisers.Exportable, GameComponent):
     for x in range(size):
       row = []
       for y in range(size):
-        row.append(
-            self.tile_blueprints.get('stone_path').create_instance((x, y),
-                                                                   self))
+        tile = self.tile_blueprints.get('stone_path')
+        row.append(tile.create_instance((x, y), self))
       self.tiles.append(row)
 
   def add_tile(self, tile: Tile) -> None:
