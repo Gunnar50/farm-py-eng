@@ -40,8 +40,8 @@ def load_json(file_path: pathlib.Path) -> dict[str, Any]:
     with open(file_path, 'r') as f:
       return json.load(f)
   else:
-    LOGGER.error(f'File path {file_path} not found. Exiting...')
-    raise exceptions.FilePathNotFound
+    raise exceptions.FilePathNotFound(
+        f'File path {file_path} not found. Exiting...')
 
 
 def get_data_model(
