@@ -32,5 +32,5 @@ class GameApp:
 
 if __name__ == '__main__':
   # EngineTester().run()
-  GameApp().run()
-  # GameApp()
+  # GameApp().run()
+  GameApp()
