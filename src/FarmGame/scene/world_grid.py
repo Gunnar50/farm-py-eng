@@ -20,13 +20,12 @@ class Scene(GameComponent):
     pass
 
   def render(self):
-    self.world_grid.render(self.window.screen)
+    self.world_grid.render(self.window.display)
 
 
-class WorldGrid(serialisers.Exportable, GameComponent):
+class WorldGrid(GameComponent, serialisers.Serialiser):
 
   def __init__(self, scene: Scene, world_size: int) -> None:
-    serialisers.Exportable.__init__(self)
     GameComponent.__init__(self)
     self.tiles: list[list[Tile]] = []
     self.scene = scene
@@ -72,11 +71,6 @@ class WorldGrid(serialisers.Exportable, GameComponent):
     # if selected_pos is not None and game_state == "game":
     #   self.selection_tile.draw_tile(screen, *selected_pos)
 
-  def get_serialiser(self) -> serialisers.Serialiser:
-    return WorldGridSerialiser()
-
-
-class WorldGridSerialiser(serialisers.Serialiser):
-
-  def export(self, writer) -> None:
-    raise NotImplementedError
+  def export(self):
+    return {}
+    # return {'tile_map': [tile for tile in self.tile_map.values()]}
