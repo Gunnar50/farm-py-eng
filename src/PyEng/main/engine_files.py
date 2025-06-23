@@ -11,11 +11,12 @@ class EngineFiles:
 
   DATA_FOLDER = ROOT_FOLDER / 'data'
   ERROR_FOLDER = ROOT_FOLDER / 'ErrorLogs'
+  CONFIG_FOLDER = DATA_FOLDER / 'config'
 
   GUI_FOLDER = DATA_FOLDER / 'GUI'
   SOUNDS_FOLDER = DATA_FOLDER / 'sounds'
   FONT_FOLDER = DATA_FOLDER / 'fonts'
-  KEY_MAPPINGS = DATA_FOLDER / 'config/key_mappings.json'
+  KEY_MAPPINGS = CONFIG_FOLDER / 'game_mappings.json'
 
   DEFAULT_FONT_ATLAS = FONT_FOLDER / 'default.png'
   DEFAULT_FONT_META = FONT_FOLDER / 'default.fnt'
