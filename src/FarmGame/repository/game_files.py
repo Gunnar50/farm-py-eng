@@ -10,12 +10,12 @@ class GameFiles:
 
   @staticmethod
   def get_items_folder() -> pathlib.Path:
-    return EngineFiles.ASSETS_FOLDER / GameFiles.ITEMS_FOLDER
+    return EngineFiles.DATA_FOLDER / GameFiles.ITEMS_FOLDER
 
   @staticmethod
   def get_entities_folder() -> pathlib.Path:
-    return EngineFiles.ASSETS_FOLDER / GameFiles.ENTITIES_FOLDER
+    return EngineFiles.DATA_FOLDER / GameFiles.ENTITIES_FOLDER
 
   @staticmethod
   def get_tiles_folder() -> pathlib.Path:
-    return EngineFiles.ASSETS_FOLDER / GameFiles.TILES_FOLDER
+    return EngineFiles.DATA_FOLDER / GameFiles.TILES_FOLDER
