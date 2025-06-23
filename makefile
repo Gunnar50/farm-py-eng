@@ -20,8 +20,8 @@ clean:
 run:
 	python main.py
 
-enum:
-	python ./scripts/generate_mappings.py
+generate_mappings:
+	./scripts/generate_mappings.sh
 
 test:
 	pytest --disable-warnings $(ARGS) -vv -s

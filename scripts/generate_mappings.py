@@ -1,9 +1,11 @@
 import json
-import re
+import pathlib
 from typing import Any
 
-json_file_path = 'assets/config/key_mappings.json'
-output_file_path = 'PyEng/shared/api.py'
+data_path = pathlib.Path('data/config').resolve()
+game_mappings_path = data_path / 'game_mappings.json'
+editor_mappings_path = data_path / 'level_editor_mappings.json'
+output_path = pathlib.Path('src/shared/key_mappings.py')
 
 
 def load_json(file_path):
@@ -12,47 +14,44 @@ def load_json(file_path):
 
 
 # Function to generate enum class from JSON mapping
-def generate_enum_class(class_name: str, key_mapping: list[dict[str, Any]]):
-  lines = [f"class {class_name}(enum.Enum):"]
+def generate_class(class_name: str, key_mapping: list[dict[str, Any]]):
+  lines = [f'class {class_name}(MappingBase):']
   for mapping in key_mapping:
     label = mapping.get('label')
     if label is None:
       print('WARNING: Mapping does not have "label" attribute. Skipping...')
       continue
     # Enum member name in uppercase, value as the original key
-    lines.append(f"  {label.upper()} = '{label}'")
-  return "\n".join(lines)
-
-
-# Function to check if class already exists and remove it if found
-def remove_existing_enum_class(class_name: str, content: str) -> str:
-  # Regex pattern to find the class definition and its body (members)
-  class_pattern = rf"(\n{{0,2}})class {class_name}\(enum\.Enum\):\n((  .+\n)+)"
-
-  # Use re.sub to replace the class definition and its body with an empty string
-  updated_content = re.sub(class_pattern, "", content, flags=re.MULTILINE)
-
-  return updated_content
+    lines.append(f"  {label.upper()} = '{label.lower()}'")
+  return '\n'.join(lines)
 
 
 def main():
-  key_mapping = load_json(json_file_path)
+  game_mapping = load_json(game_mappings_path)
+  editor_mapping = load_json(editor_mappings_path)
 
-  # Generate the enum class code as a string
-  enum_class_code = generate_enum_class("KeyMapping", key_mapping)
+  # Generate the enum classes as a string
+  game_mapping_class = generate_class('GameMapping', game_mapping.get('config'))
+  editor_mapping_class = generate_class('EditorMapping',
+                                        editor_mapping.get('config'))
+  base_class = 'class MappingBase(enum.Enum):\n  pass'
 
-  # Read the current content of the output file
-  with open(output_file_path, 'r') as f:
-    content = f.read()
+  updated_content = '\n'.join([
+      '# Auto generated from config files',
+      '# Do not modify this file manually, instead update the mappings config file',
+      '# Located at: data/config/*.json',
+      'import enum',
+  ])
+  updated_content += f'\n\n\n{base_class}\n'
+  updated_content += f'\n\n{game_mapping_class}\n'
+  updated_content += f'\n\n{editor_mapping_class}\n'
 
-  updated_content = remove_existing_enum_class("KeyMapping", content)
-  updated_content += "\n\n" + enum_class_code + "\n"
-
-  with open(output_file_path, 'w') as f:
+  output_path.parent.mkdir(parents=True, exist_ok=True)
+  with open(output_path, 'w') as f:
     f.write(updated_content)
 
-  print(f"Enum class has been updated in {output_file_path}")
+  print(f'Key mappings classes created in {output_path}')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   main()
